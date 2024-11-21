@@ -26,13 +26,14 @@ class Router
         return $path;
     }
 
-    public function dispatch(string $method, string $path): void
+    public function dispatch(string $path, string $method): void
     {
         $path = $this->normalizePath($path);
         $method = strtoupper($method);
 
         foreach ($this->routes as $route) {
-            if (!preg_match("#^{$route['path']}$#", $path) ||
+            if (
+                !preg_match("#^{$route['path']}$#", $path) ||
                 $route['method'] !== $method
             ) {
                 continue;
@@ -42,7 +43,7 @@ class Router
 
             $controllerInstance = new $class;
 
-            $controllerInstance->{$function}();
-        };
+            $controllerInstance->$function();
+        }
     }
 }
