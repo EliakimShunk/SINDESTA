@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Framework;
 
-use ReflectionClass;
+use ReflectionClass, ReflectionNamedType;
 use Framework\Exceptions\ContainerException;
 
 class Container
@@ -23,6 +23,50 @@ class Container
             throw new ContainerException("A classe \"{$className}\" nao pode ser instanciada.");
         }
 
-        dd($reflectionClass);
+        $constructor = $reflectionClass->getConstructor();
+
+        if (!$constructor) {
+            return new $className;
+        }
+
+        $params = $constructor->getParameters();
+
+        if (count($params) === 0) {
+            return new $className;
+        }
+
+        $dependencies = [];
+
+        foreach ($params as $param) {
+            $name = $param->getName();
+            $type = $param->getType();
+
+            if (!$type) {
+                throw new ContainerException(
+                    "Nao foi possivel encontrar a classe {$className}, 
+                    porque o parâmetro {$name} não possui uma indicação de tipo.");
+            }
+
+            if (!$type instanceof ReflectionNamedType || $type->isBuiltin()) {
+                throw new ContainerException(
+                    "Nao foi possivel encontrar a classe {$className}, 
+                    porque o nome do parametro eh invalido.");
+            }
+            $dependencies[] = $this->get($type->getName());
+        }
+        return $reflectionClass->newInstanceArgs($dependencies);
+    }
+
+    public function get(string $id)
+    {
+        if (!array_key_exists($id, $this->definitions)) {
+            throw new ContainerException(
+                "A classe {$id} nao existe no container."
+            );
+        }
+        $factory = $this->definitions[$id];
+        $dependencies = $factory();
+
+        return $dependencies;
     }
 }
