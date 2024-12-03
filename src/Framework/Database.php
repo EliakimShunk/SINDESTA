@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Framework;
 
 use PDO, PDOException;
+use PDOStatement;
 
 class Database
 {
-    public PDO $connection;
+    private PDO $connection;
     public function __construct(string $driver, array $config, string $username, string $password)
     {
         $config = http_build_query(data:$config, arg_separator: ';');
@@ -21,5 +22,10 @@ class Database
             die("Nao foi possivel se conectar ao banco de dados.");
         }
 
+    }
+
+    public function query(string $query)
+    {
+        $this->connection->query($query);
     }
 }
