@@ -10,6 +10,10 @@ use Dotenv\Dotenv;
 
 use function App\Config\{registerRoutes, registerMiddleware};
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 $dotenv = Dotenv::createImmutable(Paths::ROOT);
 $dotenv->load();
 
