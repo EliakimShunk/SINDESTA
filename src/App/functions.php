@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use JetBrains\PhpStorm\NoReturn;
 
+use Framework\Http;
+
 #[NoReturn] function dd(mixed $value) : void {
     echo "<pre>";
     var_dump($value);
@@ -17,6 +19,6 @@ function e(mixed $value): string {
 
 function redirectTo(string  $path) {
     header("location: {$path}");
-    http_response_code(302);
+    http_response_code(Http::REDIRECT_STATUS_CODE);
     exit;
 }
