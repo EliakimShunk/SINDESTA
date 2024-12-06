@@ -4,14 +4,14 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd20df964edaa52ea2797cd8a45bfbce9
+class ComposerStaticInit939bab07ca0c8dc83eb59e10e18fc20d
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
-        '63dba97c0d7825bc529ea086f17ce196' => __DIR__ . '/../..' . '/src/App/Config/Routes.php',
-        'ffff9b3574fec7143b9498c3694bdaee' => __DIR__ . '/../..' . '/src/App/Config/Middleware.php',
+        '44149b34fb6b989edb64be02015735b2' => __DIR__ . '/../..' . '/src/App/Config/Routes.php',
+        '68c735fcfa67a33e5976ad0afaee885d' => __DIR__ . '/../..' . '/src/App/Config/Middleware.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -90,9 +90,9 @@ class ComposerStaticInitd20df964edaa52ea2797cd8a45bfbce9
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd20df964edaa52ea2797cd8a45bfbce9::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd20df964edaa52ea2797cd8a45bfbce9::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd20df964edaa52ea2797cd8a45bfbce9::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit939bab07ca0c8dc83eb59e10e18fc20d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit939bab07ca0c8dc83eb59e10e18fc20d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit939bab07ca0c8dc83eb59e10e18fc20d::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'moobi/phpiggy',
+        'name' => 'moobi/sindesta',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '5fa32661accd1bc8fd20ab7e48ac27a3de7baf21',
+        'reference' => 'a41d084af494257fb34be44e77545733c846d01a',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -19,10 +19,10 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'moobi/phpiggy' => array(
+        'moobi/sindesta' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '5fa32661accd1bc8fd20ab7e48ac27a3de7baf21',
+            'reference' => 'a41d084af494257fb34be44e77545733c846d01a',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

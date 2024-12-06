@@ -1,6 +1,6 @@
 {
-    "name": "moobi/phpiggy",
-    "description": "A PHP application for tracking expenses.",
+    "name": "moobi/sindesta",
+    "description": "Sindicato de Estagiarios.",
     "type": "project",
     "authors": [
         {
@@ -23,6 +23,6 @@
         ]
     },
     "scripts": {
-        "phpiggy": "php cli.php"
+        "sindesta": "php cli.php"
     }
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><?php echo e($title); ?> - PHPiggy</title>
+    <title><?php echo e($title); ?> - SINDESTA</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,10 +16,10 @@
 <!-- Start Header -->
 <header class="bg-indigo-900">
     <nav class="mx-auto flex container items-center justify-between py-4" aria-label="Global">
-        <a href="/" class="-m-1.5 p-1.5 text-white text-2xl font-bold">PHPiggy</a>
+        <a href="/" class="-m-1.5 p-1.5 text-white text-2xl font-bold">SINDESTA</a>
         <!-- Navigation Links -->
         <div class="flex lg:gap-x-10">
-            <a href="/about" class="text-gray-300 hover:text-white transition">About</a>
+            <a href="/about" class="text-gray-300 hover:text-white transition">Teste</a>
             <?php if (isset($_SESSION['user'])) : ?>
                 <a href="/logout" class="text-gray-300 hover:text-white transition">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 inline-block">
@@ -29,8 +29,8 @@
                     Logout
                 </a>
             <?php else : ?>
-                <a href="/login" class="text-gray-300 hover:text-white transition">Login</a>
-                <a href="/register" class="text-gray-300 hover:text-white transition">Register</a>
+                <a href="/login" class="text-gray-300 hover:text-white transition">Entrar</a>
+                <a href="/register" class="text-gray-300 hover:text-white transition">Cadastro</a>
             <?php endif; ?>
         </div>
     </nav>

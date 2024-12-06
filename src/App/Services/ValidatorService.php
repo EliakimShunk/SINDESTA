@@ -46,6 +46,15 @@ class ValidatorService
             'tos' => ['required']
         ]);
     }
+    public function validateRegisterUser(array $formData)
+    {
+        $this->validator->validate($formData, [
+            'usuario' => ['required'],
+            'password' => ['required'],
+            'confirmPassword' => ['required', 'match:password'],
+            'isAdmin' => ['required']
+        ]);
+    }
 
     public function validateLogin(array $formData)
     {
@@ -55,6 +64,15 @@ class ValidatorService
 
         ]);
     }
+    public function validateLoginUser(array $formData)
+    {
+        $this->validator->validate($formData, [
+            'usuario' => ['required'],
+            'password' => ['required']
+
+        ]);
+    }
+
 
     public function validateTransaction(array $formData) {
         $this->validator->validate($formData, [

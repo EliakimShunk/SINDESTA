@@ -40,7 +40,7 @@ class HomeController
             $pages
         );
 
-        echo $this->view->render("/index.php", [
+        echo $this->view->render("/index_old.php", [
             'transactions' => $transactions,
             'currentPage' => $page,
             'previousPageQuery' => http_build_query([
