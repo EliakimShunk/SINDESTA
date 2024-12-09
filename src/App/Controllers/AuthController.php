@@ -21,11 +21,23 @@ class AuthController
         echo $this->view->render('register.php');
     }
 
+    public function registerOld()
+    {
+        $this->validatorService->validateRegister($_POST);
+
+
+        $this->userService->isEmailTakenOld($_POST['email']);
+
+        $this->userService->create($_POST);
+
+        redirectTo('/');
+    }
+
     public function register()
     {
         $this->validatorService->validateRegister($_POST);
 
-        $this->userService->isEmailTaken($_POST['email']);
+        $this->userService->isUsernameTaken($_POST['usuario']);
 
         $this->userService->create($_POST);
 
@@ -34,6 +46,15 @@ class AuthController
     public function loginView()
     {
         echo $this->view->render('login.php');
+    }
+
+    public function loginOld()
+    {
+        $this->validatorService->validateLogin($_POST);
+
+        $this->userService->login($_POST);
+
+        redirectTo('/');
     }
 
     public function login()

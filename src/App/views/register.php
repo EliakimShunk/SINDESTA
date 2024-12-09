@@ -66,19 +66,25 @@
                 <div class="mt-2">
                     <label class="inline-flex items-center">
                         <input
-                            <?php echo isset($oldFormData['isAdmin']) && $oldFormData['isAdmin'] === '0'
+                            <?php echo isset($oldFormData['isAdmin']) && $oldFormData['isAdmin'] === '2'
                                 ? 'checked'
                                 : ''; ?>
                                 name="isAdmin"
-                                value="0"
+                                value="2"
                                 class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50"
                                 type="radio"
                         />
                         <span class="ml-2">Comum</span>
                     </label>
+                    <?php if (!isset($oldFormData['isAdmin']) && array_key_exists('isAdmin', $errors)) : ?>
+                        <div class="bg-gray-100 mt-2 p-2 text-red-500">
+                            <?php echo e($errors['isAdmin'][0]); ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
+
 
         <button
             type="submit"

@@ -9,10 +9,12 @@ use App\Controllers\{
     HomeController,
     AboutController,
     AuthController,
+    FiliadoController,
     TransactionController,
     ReceiptController,
     ErrorController};
 use App\Middleware\{AuthRequiredMiddleware, GuestOnlyMiddleware};
+use function Sodium\add;
 
 function registerRoutes(App $app) {
     $app->get('/', [HomeController::class, 'home'])->add(AuthRequiredMiddleware::class);
@@ -22,6 +24,8 @@ function registerRoutes(App $app) {
     $app->get('/login', [AuthController::class, 'loginView'])->add(GuestOnlyMiddleware::class);
     $app->post('/login', [AuthController::class, 'login'])->add(GuestOnlyMiddleware::class);
     $app->get('/logout', [AuthController::class, 'logout'])->add(AuthRequiredMiddleware::class);
+    $app->get('/filiado', [FiliadoController::class, 'createView'])->add(AuthRequiredMiddleware::class);
+    $app->post('/filiado', [FiliadoController::class, 'create'])->add(AuthRequiredMiddleware::class);
     $app->get('/transaction', [TransactionController::class, 'createView'])->add(AuthRequiredMiddleware::class);
     $app->post('/transaction', [TransactionController::class, 'create'])->add(AuthRequiredMiddleware::class);
     $app->get('/transaction/{transaction}', [TransactionController::class, 'editView'])->add(AuthRequiredMiddleware::class);

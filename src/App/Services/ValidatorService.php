@@ -34,7 +34,7 @@ class ValidatorService
         $this->validator->add('dateFormat', new DateFormatRule());
     }
 
-    public function validateRegister(array $formData)
+    public function validateRegisterOld(array $formData)
     {
         $this->validator->validate($formData, [
             'email' => ['required', 'email'],
@@ -43,10 +43,13 @@ class ValidatorService
             'socialMediaURL' => ['required', 'url'],
             'password' => ['required'],
             'confirmPassword' => ['required', 'match:password'],
-            'tos' => ['required']
+            'tos' => ['required'],
+            'usuario' => ['required'],
+            'isAdmin' => ['required']
         ]);
     }
-    public function validateRegisterUser(array $formData)
+
+    public function validateRegister(array $formData)
     {
         $this->validator->validate($formData, [
             'usuario' => ['required'],
@@ -56,7 +59,7 @@ class ValidatorService
         ]);
     }
 
-    public function validateLogin(array $formData)
+    public function validateLoginOld(array $formData)
     {
         $this->validator->validate($formData, [
             'email' => ['required', 'email'],
@@ -64,7 +67,7 @@ class ValidatorService
 
         ]);
     }
-    public function validateLoginUser(array $formData)
+    public function validateLogin(array $formData)
     {
         $this->validator->validate($formData, [
             'usuario' => ['required'],
@@ -80,6 +83,20 @@ class ValidatorService
             'amount' => ['required', 'numeric'],
             'date' => ['required', 'dateFormat:Y-m-d']
 
+        ]);
+    }
+
+    public function validateFiliado(array $formData) {
+        $this->validator->validate($formData, [
+            'nome' => ['required'],
+            'cpf' => ['required'],
+            'rg' => ['required'],
+            'birthDate' => ['required', 'dateFormat:Y-m-d'],
+            'company' => ['required'],
+            'position' => ['required'],
+            'status' => ['required'],
+            'phone' => ['required'],
+            'cellphone' => ['required']
         ]);
     }
 }

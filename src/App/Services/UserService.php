@@ -11,20 +11,6 @@ class UserService
 {
     public function __construct(private Database $db) {
     }
-
-    public function isEmailTaken(string $email) {
-        $emailCount = $this->db->query(
-            "SELECT COUNT(*) FROM users WHERE email = :email",
-            [
-                'email' => $email
-            ]
-        )->count();
-
-        if ($emailCount > 0) {
-            throw new ValidationException(['email' => 'Este email ja esta sendo utilizado.']);
-
-        }
-    }
     public function isUsernameTaken(string $username) {
         $usernameCount = $this->db->query(
             "SELECT COUNT(*) FROM usr_usuario WHERE usr_username = :usuario",
@@ -38,28 +24,7 @@ class UserService
 
         }
     }
-
     public function create(array $formData) {
-
-        $password = password_hash($formData['password'], PASSWORD_BCRYPT, ['cost' => 12]);
-
-        $this->db->query(
-            "INSERT INTO users (email, password, age, country, social_media_url)
-                   VALUES (:email, :password, :age, :country, :url)",
-            [
-                'email' => $formData['email'],
-                'password' => $password,
-                'age' => $formData['age'],
-                'country' => $formData['country'],
-                'url' => $formData['socialMediaURL']
-            ]
-        );
-
-        session_regenerate_id();
-
-        $_SESSION['user'] = $this->db->id();
-    }
-    public function createUser(array $formData) {
 
         $password = password_hash($formData['password'], PASSWORD_BCRYPT, ['cost' => 12]);
 
@@ -77,32 +42,15 @@ class UserService
 
         $_SESSION['user'] = $this->db->id();
     }
-
+    
     public function login(array $formData)
     {
-        $user = $this->db->query("SELECT * FROM users WHERE email = :email", [
-            'email' => $formData['email']
+        $user = $this->db->query("SELECT * FROM usr_usuario WHERE usr_username = :usuario", [
+            'usuario' => $formData['usuario']
         ])->find();
 
         $passwordsMatch = password_verify(
-            $formData['password'], $user['password'] ?? ''
-        );
-        if (!$user || !$passwordsMatch) {
-            throw new ValidationException(['password' => ['Credenciais invalidas.']]);
-        }
-
-        session_regenerate_id();
-
-        $_SESSION['user'] = $user['ID'];
-    }
-    public function loginUser(array $formData)
-    {
-        $user = $this->db->query("SELECT * FROM usr_usuario WHERE usr_username = :username", [
-            'username' => $formData['usuario']
-        ])->find();
-
-        $passwordsMatch = password_verify(
-            $formData['password'], $user['password'] ?? ''
+            $formData['password'], $user['usr_password'] ?? ''
         );
         if (!$user || !$passwordsMatch) {
             throw new ValidationException(['password' => ['Credenciais invalidas.']]);
@@ -111,6 +59,11 @@ class UserService
         session_regenerate_id();
 
         $_SESSION['user'] = $user['usr_id'];
+    }
+
+    public function getAllUsers()
+    {
+
     }
 
     public function logout() {

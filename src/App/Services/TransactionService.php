@@ -29,40 +29,45 @@ class TransactionService
 
     public function getUserTransactions(int $length, int $offset)
     {
-        $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
-        $params =             [
-            'user_ID' => $_SESSION['user'],
-            'description' => "%{$searchTerm}%"
-        ];
+        try {
 
-        $transactions = $this->db->query(
-            "SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date
-                   FROM transactions 
-                   WHERE user_ID = :user_ID
-                   AND description LIKE :description
-                   LIMIT {$length} OFFSET {$offset}",
-            $params
-        )->findAll();
+            $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+            $params = [
+                'user_ID' => $_SESSION['user'],
+                'description' => "%{$searchTerm}%"
+            ];
 
-        $transactions = array_map(function (array $transaction) {
-            $transaction['receipts'] = $this->db->query(
-                "SELECT * FROM receipts 
-                       WHERE transaction_id = :transaction_id",
-                ['transaction_id' => $transaction['ID']]
+            $transactions = $this->db->query(
+                "SELECT *, DATE_FORMAT(date, '%Y-%m-%d') AS formatted_date
+                       FROM transactions 
+                       WHERE user_ID = :user_ID
+                       AND description LIKE :description
+                       LIMIT {$length} OFFSET {$offset}",
+                $params
             )->findAll();
 
-            return $transaction;
-        }, $transactions);
+            $transactions = array_map(function (array $transaction) {
+                $transaction['receipts'] = $this->db->query(
+                    "SELECT * FROM receipts 
+                           WHERE transaction_id = :transaction_id",
+                    ['transaction_id' => $transaction['ID']]
+                )->findAll();
 
-        $transactionCount = $this->db->query(
-            "SELECT COUNT(*)
-                   FROM transactions 
-                   WHERE user_ID = :user_ID
-                   AND description LIKE :description",
-            $params
-        )->count();
+                return $transaction;
+            }, $transactions);
 
-        return [$transactions, $transactionCount];
+            $transactionCount = $this->db->query(
+                "SELECT COUNT(*)
+                       FROM transactions 
+                       WHERE user_ID = :user_ID
+                       AND description LIKE :description",
+                $params
+            )->count();
+
+            return [$transactions, $transactionCount];
+        } catch (\PDOException $e) {
+            echo '';
+        }
     }
 
     public function getUserTransaction(string $id) {
