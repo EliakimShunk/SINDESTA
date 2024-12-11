@@ -99,4 +99,20 @@ class ValidatorService
             'cellphone' => ['required']
         ]);
     }
+
+    public function validateFiliadoEdit(array $formData) {
+
+        $this->validator->validate($formData, [
+            'company' => ['required'],
+            'position' => ['required'],
+            'status' => ['required']
+        ]);
+
+    }
+
+    public function validateUserEdit(array $formData) {
+        $this->validator->validate($formData, [
+            'usuario' => ['required']
+        ]);
+    }
 }

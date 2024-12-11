@@ -25,7 +25,6 @@ class AuthController
     {
         $this->validatorService->validateRegister($_POST);
 
-
         $this->userService->isEmailTakenOld($_POST['email']);
 
         $this->userService->create($_POST);
@@ -41,7 +40,7 @@ class AuthController
 
         $this->userService->create($_POST);
 
-        redirectTo('/');
+        redirectTo('/usuario');
     }
     public function loginView()
     {

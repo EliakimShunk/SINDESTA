@@ -29,4 +29,36 @@ class FiliadoController
         redirectTo('/');
     }
 
+    public function editView(array $params)
+    {
+        $filiado = $this->filiadoService->getFiliado(
+            $params['filiado']
+        );
+        if (!$filiado) {
+            redirectTo('/');
+        }
+        echo $this->view->render("filiado/edit.php", [
+            'filiado' => $filiado
+        ]);
+    }
+    public function edit(array $params) {
+        $filiado = $this->filiadoService->getFiliado(
+            $params['filiado']
+        );
+
+        if (!$filiado) {
+            redirectTo('/');
+        }
+        $this->validatorService->validateFiliadoEdit($_POST);
+
+        $this->filiadoService->update($_POST, $filiado['flo_id']);
+
+        redirectTo($_SERVER['HTTP_REFERER']);
+    }
+
+    public function delete(array $params) {
+        $this->filiadoService->delete((int) $params['filiado']);
+
+        redirectTo('/');
+    }
 }

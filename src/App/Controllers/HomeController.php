@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Services\FiliadoService;
+use App\Services\{FiliadoService, TransactionService};
 use Framework\TemplateEngine;
-use App\Services\TransactionService;
 
 class HomeController
 {
@@ -17,7 +16,7 @@ class HomeController
         private FiliadoService $filiadoService)
     {
     }
-    public function homeold()
+    public function homeold(string $subject)
     {
         $page = $_GET['p'] ?? 1;
         $page = (int) $page;

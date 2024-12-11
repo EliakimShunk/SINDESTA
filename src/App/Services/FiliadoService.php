@@ -11,8 +11,7 @@ class FiliadoService
     public function __construct(private Database $db) {
     }
 
-    public function create(array $formData)
-    {
+    public function create(array $formData) {
         $formatedDate = "{$formData['birthDate']} 00:00:00";
 
         $this->db->query(
@@ -73,6 +72,47 @@ class FiliadoService
         )->count();
 
         return [$filiados, $filiadoCount];
+    }
+    public function getFiliado(string $id) {
+        return $this->db->query(
+            "SELECT *, DATE_FORMAT(flo_birthDate, '%d/%m/%Y') AS formatted_birthDate
+            FROM `flo_filiado`
+            WHERE flo_id = :id",
+            [
+                'id' => $id
+            ])->find();
+    }
+
+    public function update(array $formData, int $id) {
+        $currentTime = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
+        $currentTime = $currentTime->format('Y-m-d H:i:s');
+
+        $this->db->query(
+            "UPDATE flo_filiado
+                  SET `flo_company` = :company,
+                      `flo_position` = :position,
+                      `flo_status` = :status,
+                      `flo_lastUpdate` = :lastUpdate
+                  WHERE flo_id = :id",
+            [
+                'company' => $formData['company'],
+                'position' => $formData['position'],
+                'status' => $formData['status'],
+                'lastUpdate' => $currentTime,
+                'id' => $id,
+            ]
+        );
+    }
+    public function delete(int $id) {
+        $this->db->query(
+            "DELETE FROM dpe_dependente 
+            WHERE flo_id = :id;
+            DELETE FROM flo_filiado 
+            WHERE flo_id = :id;",
+            [
+                'id' => $id
+            ]
+        );
     }
 
 }

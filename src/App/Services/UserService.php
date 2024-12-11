@@ -37,10 +37,58 @@ class UserService
                 'isAdmin' => $formData['isAdmin']
             ]
         );
+    }
 
-        session_regenerate_id();
+    public function getAllUsers(int $length, int $offset)
+    {
+        $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+        $params = [
+            'usuario' => "%{$searchTerm}%"
+        ];
 
-        $_SESSION['user'] = $this->db->id();
+        $usuarios = $this->db->query(
+            "SELECT *, DATE_FORMAT(usr_lastUpdate, '%d/%m/%Y as %H:%i:%s') AS formatted_lastUpdate
+            FROM `usr_usuario`
+            WHERE usr_username LIKE :usuario
+            LIMIT {$length} OFFSET {$offset}",
+            $params
+        )->findAll();
+
+        $usuarioCount = $this->db->query(
+            "SELECT COUNT(*) FROM `usr_usuario`
+            WHERE usr_username LIKE :usuario",
+            $params
+        )->count();
+
+        return [$usuarios, $usuarioCount];
+
+    }
+    public function getUser(string $id) {
+        return $this->db->query(
+            "SELECT *
+            FROM `usr_usuario`
+            WHERE usr_id = :id",
+            [
+                'id' => $id
+            ])->find();
+    }
+
+    public function update(array $formData, int $id) {
+        $currentTime = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
+        $currentTime = $currentTime->format('Y-m-d H:i:s');
+
+        $this->db->query(
+            "UPDATE usr_usuario
+                  SET `usr_username` = :usuario,
+                      `usr_lastUpdate` = :lastUpdate
+                  WHERE usr_id = :id",
+            [
+                'usuario' => $formData['usuario'],
+                'lastUpdate' => $currentTime,
+                'id' => $id
+            ]
+        );
+
     }
     
     public function login(array $formData)
@@ -58,12 +106,7 @@ class UserService
 
         session_regenerate_id();
 
-        $_SESSION['user'] = $user['usr_id'];
-    }
-
-    public function getAllUsers()
-    {
-
+        $_SESSION['user'] = $user['usr_is_admin'];
     }
 
     public function logout() {
@@ -78,6 +121,16 @@ class UserService
             $params["domain"],
             $params["secure"],
             $params["httponly"]
+        );
+    }
+
+    public function delete(int $id) {
+        $this->db->query(
+            "DELETE FROM usr_usuario 
+                   WHERE usr_id = :id",
+            [
+                'id' => $id
+            ]
         );
     }
 
