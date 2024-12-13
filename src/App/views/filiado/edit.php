@@ -62,7 +62,7 @@
                 <p><?php echo e($filiado['flo_cellphone']); ?></p>
             </label>
             <button type="submit" class="block w-full py-2 bg-indigo-600 text-white rounded">
-                Enviar
+                Editar
             </button>
         </form>
     </section>

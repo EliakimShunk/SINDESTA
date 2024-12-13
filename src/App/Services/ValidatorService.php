@@ -6,7 +6,11 @@ namespace App\Services;
 
 use Framework\Validator;
 use Framework\Rules\{
+    CelularFormatRule,
+    CpfFormatRule,
     RequiredRule,
+    RgFormatRule,
+    TelefoneFormatRule,
     EmailRule,
     MinRule,
     InRule,
@@ -32,6 +36,9 @@ class ValidatorService
         $this->validator->add('lengthMax', new LengthMaxRule());
         $this->validator->add('numeric', new NumericRule());
         $this->validator->add('dateFormat', new DateFormatRule());
+        $this->validator->add('cpf', new CpfFormatRule());
+        $this->validator->add('celular', new CelularFormatRule());
+        $this->validator->add('telefone', new TelefoneFormatRule());
     }
 
     public function validateRegisterOld(array $formData)
@@ -48,7 +55,6 @@ class ValidatorService
             'isAdmin' => ['required']
         ]);
     }
-
     public function validateRegister(array $formData)
     {
         $this->validator->validate($formData, [
@@ -58,7 +64,6 @@ class ValidatorService
             'isAdmin' => ['required']
         ]);
     }
-
     public function validateLoginOld(array $formData)
     {
         $this->validator->validate($formData, [
@@ -75,8 +80,6 @@ class ValidatorService
 
         ]);
     }
-
-
     public function validateTransaction(array $formData) {
         $this->validator->validate($formData, [
             'description' => ['required', 'lengthMax:255'],
@@ -85,21 +88,19 @@ class ValidatorService
 
         ]);
     }
-
     public function validateFiliado(array $formData) {
         $this->validator->validate($formData, [
             'nome' => ['required'],
-            'cpf' => ['required'],
+            'cpf' => ['required', 'cpf'],
             'rg' => ['required'],
             'birthDate' => ['required', 'dateFormat:Y-m-d'],
             'company' => ['required'],
             'position' => ['required'],
             'status' => ['required'],
-            'phone' => ['required'],
-            'cellphone' => ['required']
+            'phone' => ['required', 'telefone'],
+            'cellphone' => ['required', 'celular']
         ]);
     }
-
     public function validateFiliadoEdit(array $formData) {
 
         $this->validator->validate($formData, [
@@ -109,10 +110,21 @@ class ValidatorService
         ]);
 
     }
-
     public function validateUserEdit(array $formData) {
         $this->validator->validate($formData, [
             'usuario' => ['required']
+        ]);
+    }
+    public function validateDependente(array $formData) {
+        $this->validator->validate($formData, [
+            'nome' => ['required'],
+            'birthDate' => ['required', 'dateFormat:Y-m-d'],
+            'relationship' => ['required']
+        ]);
+    }
+    public function validateDependenteEdit(array $formData) {
+        $this->validator->validate($formData, [
+            'nome' => ['required'],
         ]);
     }
 }

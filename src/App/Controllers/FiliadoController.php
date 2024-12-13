@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Services\FiliadoService;
-use App\Services\TransactionService;
-use App\Services\ValidatorService;
+use App\Services\{FiliadoService, ValidatorService};
 use Framework\TemplateEngine;
 
 class FiliadoController

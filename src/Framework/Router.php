@@ -23,6 +23,7 @@ class Router
             'middlewares' => [],
             'regexPath' => $regexPath
         ];
+
     }
 
     private function normalizePath(string $path): string

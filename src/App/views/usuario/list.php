@@ -39,7 +39,7 @@
                 <th class="p-4 text-left text-sm font-semibold text-gray-900">
                     Ultima Atualizacao
                 </th>
-                <th>Editar/Deletar</th>
+                <th>Acoes</th>
             </tr>
             </thead>
             <!-- Table Body -->

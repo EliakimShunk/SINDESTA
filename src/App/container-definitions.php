@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Framework\{TemplateEngine, Database, Container};
 use App\Config\Paths;
 use App\Services\{
+    DependenteService,
     FiliadoService,
     ValidatorService,
     UserService,
@@ -21,6 +22,7 @@ return [
     ], $_ENV['DB_USER'], $_ENV['DB_PASS']),
     UserService::class => function (Container $container) {
         $db = $container->get(Database::class);
+
         return new UserService($db);
     },
     TransactionService::class => function (Container $container) {
@@ -33,8 +35,14 @@ return [
 
         return new FiliadoService($db);
     },
+    DependenteService::class => function (Container $container) {
+        $db = $container->get(Database::class);
+
+        return new DependenteService($db);
+    },
     ReceiptService::class => function (Container $container) {
-    $db = $container->get(Database::class);
-    return new ReceiptService($db);
+        $db = $container->get(Database::class);
+
+        return new ReceiptService($db);
     }
 ];

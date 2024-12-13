@@ -6,7 +6,7 @@ namespace App\Config;
 
 use Framework\App;
 use App\Controllers\{HomeController,
-    AboutController,
+    DependenteController,
     AuthController,
     FiliadoController,
     TransactionController,
@@ -31,6 +31,12 @@ function registerRoutes(App $app) {
     $app->get('/filiado/{filiado}', [FiliadoController::class, 'editView'])->add(AuthRequiredMiddleware::class);
     $app->post('/filiado/{filiado}', [FiliadoController::class, 'edit'])->add(AuthRequiredMiddleware::class);
     $app->delete('/filiado/{filiado}', [FiliadoController::class, 'delete'])->add(AuthRequiredMiddleware::class);
+    $app->get('/filiado/{filiado}/dependentes', [DependenteController::class, 'list'])->add(AuthRequiredMiddleware::class);
+    $app->get('/filiado/{filiado}/dependente', [DependenteController::class, 'createView'])->add(AuthRequiredMiddleware::class);
+    $app->post('/filiado/{filiado}/dependente', [DependenteController::class, 'create'])->add(AuthRequiredMiddleware::class);
+    $app->get('/filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'editView'])->add(AuthRequiredMiddleware::class);
+    $app->post('/filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'edit'])->add(AuthRequiredMiddleware::class);
+    $app->delete('filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'delete'])->add(AuthRequiredMiddleware::class);
     $app->get('/transaction', [TransactionController::class, 'createView'])->add(AuthRequiredMiddleware::class);
     $app->post('/transaction', [TransactionController::class, 'create'])->add(AuthRequiredMiddleware::class);
     $app->get('/transaction/{transaction}', [TransactionController::class, 'editView'])->add(AuthRequiredMiddleware::class);

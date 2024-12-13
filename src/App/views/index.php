@@ -57,7 +57,7 @@
                 <th class="p-4 text-left text-sm font-semibold text-gray-900">
                     Ultima Atualizacao
                 </th>
-                <th>Editar/Deletar</th>
+                <th>Acoes</th>
             </tr>
             </thead>
             <!-- Transaction Table Body -->
@@ -86,6 +86,14 @@
                     <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['formatted_lastUpdate'])?></td>
                     <!-- Actions -->
                     <td class="p-4 text-sm text-gray-600 flex justify-center space-x-2">
+                        <a href="/filiado/<?php echo e($filiado['flo_id']); ?>/dependentes" class="p-2 bg-amber-50 text-xs text-amber-900 hover:bg-amber-500
+                hover:text-white transition rounded">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z
+                                M14 3v5h5M16 13H8M16 17H8M10 9H8" />
+                            </svg>
+                        </a>
                         <a href="/filiado/<?php echo e($filiado['flo_id']); ?>" class="p-2 bg-emerald-50 text-xs
                 text-emerald-900 hover:bg-emerald-500 hover:text-white transition rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
