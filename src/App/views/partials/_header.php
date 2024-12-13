@@ -19,8 +19,8 @@
         <a href="/" class="-m-1.5 p-1.5 text-white text-2xl font-bold">SINDESTA</a>
         <!-- Navigation Links -->
         <div class="flex lg:gap-x-10">
-            <a href="/" class="text-gray-300 hover:text-white transition">Listar Filiados</a>
             <?php if (isset($_SESSION['user'])) : ?>
+                <a href="/" class="text-gray-300 hover:text-white transition">Listar Filiados</a>
                 <?php if ($_SESSION['user'] === 1) : ?>
                     <a href="/cadastrar" class="text-gray-300 hover:text-white transition">Cadastrar Usuario</a>
                     <a href="/usuario" class="text-gray-300 hover:text-white transition">Listar Usuarios</a>
