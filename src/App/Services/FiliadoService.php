@@ -52,6 +52,11 @@ class FiliadoService
 
     public function getAllFiliados(int $length, int $offset) {
         $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
+        $monthSelect = $_GET['f'] ?? '';
+        $filterMonth = "= $monthSelect";
+        if ($monthSelect === '') {
+            $filterMonth = '!= 0';
+        }
         $params = [
             'nome' => "%{$searchTerm}%"
         ];
@@ -61,15 +66,30 @@ class FiliadoService
             DATE_FORMAT(flo_lastUpdate, '%d/%m/%Y as %H:%m:%s') AS formatted_lastUpdate
             FROM `flo_filiado`
             WHERE flo_name LIKE :nome
+            AND MONTH(flo_birthDate) {$filterMonth}
             LIMIT {$length} OFFSET {$offset}",
         $params
         )->findAll();
 
         $filiadoCount = $this->db->query(
             "SELECT COUNT(*) FROM `flo_filiado`
-            WHERE flo_name LIKE :nome",
+            WHERE flo_name LIKE :nome
+            AND MONTH(flo_birthDate) {$filterMonth}",
             $params
         )->count();
+
+        foreach ($filiados as &$filiado) {
+            $tz = new \DateTimeZone('America/Bahia');
+
+            $birthDate = \DateTime::createFromFormat('Y-m-d H:i:s', $filiado['flo_birthDate'], $tz);
+
+            if ($birthDate) {
+                $age = $birthDate->diff(new \DateTime('now', $tz))->y;
+                $filiado['flo_age'] = $age;
+            } else {
+                $filiado['flo_age'] = null;
+            }
+        }
 
         return [$filiados, $filiadoCount];
     }

@@ -64,6 +64,7 @@ class HomeController
         $length = 10;
         $offset = ($page - 1) * $length;
         $searchTerm = $_GET['s'] ?? null;
+        $filterMonth = $_GET['f'] ?? null;
 
         [$filiados, $count] = $this->filiadoService->getAllFiliados(
             $length,
@@ -78,6 +79,7 @@ class HomeController
             fn($pageNum) => http_build_query([
                 'p' => $pageNum,
                 's' => $searchTerm,
+                'f' => $filterMonth
             ]),
             $pages
         );
@@ -87,15 +89,18 @@ class HomeController
             'currentPage' => $page,
             'previousPageQuery' => http_build_query([
                 'p' => $page - 1,
-                's' => $searchTerm
+                's' => $searchTerm,
+                'f' => $filterMonth
             ]),
             'lastPage' => $lastPage,
             'nextPageQuery' => http_build_query([
                 'p' => $page + 1,
-                's' => $searchTerm
+                's' => $searchTerm,
+                'f' => $filterMonth
             ]),
             'pageLinks' => $pageLinks,
-            'searchTerm' => $searchTerm
+            'searchTerm' => $searchTerm,
+            'filterMonth' => $filterMonth
         ]);
     }
 }

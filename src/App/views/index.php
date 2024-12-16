@@ -22,42 +22,68 @@
                     Pesquisar
                 </button>
             </div>
+            <div class="flex mt-4 w-full items-center" style="gap: 10px">
+                <label for="f"> Mes de Nascimento:</label>
+                <div class="flex" style="justify-content: start; width: 50%">
+                    <select name="f" id="f" style="width: 20%" class="rounded-l-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        <option value="" <?php echo $filterMonth === '' ? 'selected' : '' ?>>Selecione</option>
+                        <option value="1" <?php echo $filterMonth === '1' ? 'selected' : '' ?>>Janeiro</option>
+                        <option value="2" <?php echo $filterMonth === '2' ? 'selected' : '' ?>>Fevereiro</option>
+                        <option value="3" <?php echo $filterMonth === '3' ? 'selected' : '' ?>>Marco</option>
+                        <option value="4" <?php echo $filterMonth === '4' ? 'selected' : '' ?>>Abril</option>
+                        <option value="5" <?php echo $filterMonth === '5' ? 'selected' : '' ?>>Maio</option>
+                        <option value="6" <?php echo $filterMonth === '6' ? 'selected' : '' ?>>Junho</option>
+                        <option value="7" <?php echo $filterMonth === '7' ? 'selected' : '' ?>>Julho</option>
+                        <option value="8" <?php echo $filterMonth === '8' ? 'selected' : '' ?>>Agosto</option>
+                        <option value="9" <?php echo $filterMonth === '9' ? 'selected' : '' ?>>Setembro</option>
+                        <option value="10" <?php echo $filterMonth === '10' ? 'selected' : '' ?>>Outubro</option>
+                        <option value="11" <?php echo $filterMonth === '11' ? 'selected' : '' ?>>Novembro</option>
+                        <option value="12" <?php echo $filterMonth === '12' ? 'selected' : '' ?>>Dezembro</option>
+                    </select>
+                    <button type="submit" class="rounded-r-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        Filtrar
+                    </button>
+                </div>
+            </div>
         </form>
-        <!-- Transaction List -->
+        <!-- Filiado List -->
         <table class="table-auto min-w-full divide-y divide-gray-300 mt-6">
             <thead class="bg-gray-50">
             <tr>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     Nome
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     CPF
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     RG
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     Data de Nascimento
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
+                    Idade
+                </th>
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     Empresa
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     Posicao
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     Situacao
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     Telefone
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     Celular
                 </th>
-                <th class="p-4 text-left text-sm font-semibold text-gray-900">
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">
                     Ultima Atualizacao
                 </th>
-                <th>Acoes</th>
+                <th class="p-4 text-center text-sm font-semibold text-gray-900">Acoes</th>
             </tr>
             </thead>
             <!-- Transaction Table Body -->
@@ -72,6 +98,8 @@
                     <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_rg'])?></td>
                     <!-- Data de Nascimento -->
                     <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['formatted_birthDate'])?></td>
+                    <!-- Idade -->
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_age']); ?></td>
                     <!-- Empresa -->
                     <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_company'])?></td>
                     <!-- Posicao -->

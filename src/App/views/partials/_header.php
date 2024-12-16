@@ -22,7 +22,6 @@
             <?php if (isset($_SESSION['user'])) : ?>
                 <a href="/" class="text-gray-300 hover:text-white transition">Listar Filiados</a>
                 <?php if ($_SESSION['user'] === 1) : ?>
-                    <a href="/cadastrar" class="text-gray-300 hover:text-white transition">Cadastrar Usuario</a>
                     <a href="/usuario" class="text-gray-300 hover:text-white transition">Listar Usuarios</a>
                 <?php endif; ?>
                 <a href="/logout" class="text-gray-300 hover:text-white transition">

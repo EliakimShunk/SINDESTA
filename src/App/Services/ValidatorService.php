@@ -9,7 +9,6 @@ use Framework\Rules\{
     CelularFormatRule,
     CpfFormatRule,
     RequiredRule,
-    RgFormatRule,
     TelefoneFormatRule,
     EmailRule,
     MinRule,
@@ -41,20 +40,6 @@ class ValidatorService
         $this->validator->add('telefone', new TelefoneFormatRule());
     }
 
-    public function validateRegisterOld(array $formData)
-    {
-        $this->validator->validate($formData, [
-            'email' => ['required', 'email'],
-            'age' => ['required', 'min:18'],
-            'country' => ['required', 'in:USA,Canada,Mexico'],
-            'socialMediaURL' => ['required', 'url'],
-            'password' => ['required'],
-            'confirmPassword' => ['required', 'match:password'],
-            'tos' => ['required'],
-            'usuario' => ['required'],
-            'isAdmin' => ['required']
-        ]);
-    }
     public function validateRegister(array $formData)
     {
         $this->validator->validate($formData, [
@@ -62,14 +47,6 @@ class ValidatorService
             'password' => ['required'],
             'confirmPassword' => ['required', 'match:password'],
             'isAdmin' => ['required']
-        ]);
-    }
-    public function validateLoginOld(array $formData)
-    {
-        $this->validator->validate($formData, [
-            'email' => ['required', 'email'],
-            'password' => ['required']
-
         ]);
     }
     public function validateLogin(array $formData)
@@ -124,7 +101,7 @@ class ValidatorService
     }
     public function validateDependenteEdit(array $formData) {
         $this->validator->validate($formData, [
-            'nome' => ['required'],
+            'nome' => ['required']
         ]);
     }
 }
