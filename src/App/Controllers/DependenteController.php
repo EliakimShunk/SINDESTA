@@ -8,83 +8,83 @@ use Framework\TemplateEngine;
 class DependenteController
 {
     public function __construct(
-        private TemplateEngine $view,
-        private FiliadoService $filiadoService,
-        private ValidatorService $validatorService,
-        private DependenteService $dependenteService
+        private TemplateEngine $oView,
+        private FiliadoService $oFiliadoService,
+        private ValidatorService $oValidatorService,
+        private DependenteService $oDependenteService
     ) {
     }
 
-    public function list(array $params) {
+    public function list(array $aParams) {
 
-        $filiado = $this->filiadoService->getFiliado(
-            $params['filiado']
+        $aFiliado = $this->oFiliadoService->getFiliado(
+            $aParams['filiado']
         );
-        if (!$filiado) {
+        if (!$aFiliado) {
             redirectTo('/');
         }
 
-        $dependentes = $this->dependenteService->getAllDependentes(
-            $filiado
+        $aDependentes = $this->oDependenteService->getAllDependentes(
+            $aFiliado
         );
-        if (!$dependentes) {
-            redirectTo("/filiado/{$filiado['flo_id']}/dependente");
+        if (!$aDependentes) {
+            redirectTo("/filiado/{$aFiliado['flo_id']}/dependente");
         } else {
-            echo $this->view->render("/dependente/list.php", [
-                'filiado' => $filiado,
-                'dependentes' => $dependentes]);
+            echo $this->oView->render("/dependente/list.php", [
+                'filiado' => $aFiliado,
+                'dependentes' => $aDependentes]);
         }
 
     }
-    public function createView(array $params) {
-        $filiado = $this->filiadoService->getFiliado(
-            $params['filiado']
+    public function createView(array $aParams) {
+        $filiado = $this->oFiliadoService->getFiliado(
+            $aParams['filiado']
         );
         if (!$filiado) {
             redirectTo('/');
         }
-        echo $this->view->render("dependente/create.php", [
+        echo $this->oView->render("dependente/create.php", [
             'filiado' => $filiado
         ]);
     }
     public function create() {
-        $this->validatorService->validateDependente($_POST);
+        $this->oValidatorService->validateDependente($_POST);
 
-        $this->dependenteService->create($_POST);
+        $this->oDependenteService->create($_POST);
 
         redirectTo("/filiado/{$_POST['flo_id']}/dependentes");
     }
 
-    public function editView(array $params) {
-        $filiado = $this->filiadoService->getFiliado(
-            $params['filiado']
+    public function editView(array $aParams) {
+        $filiado = $this->oFiliadoService->getFiliado(
+            $aParams['filiado']
         );
         if (!$filiado) {
             redirectTo('/');
         }
-        $dependente = $this->dependenteService->getDependente(
-            $params['dependente']
+        $dependente = $this->oDependenteService->getDependente(
+            $aParams['dependente']
         );
         if (!$dependente) {
             redirectTo('/');
         }
-        echo $this->view->render("dependente/edit.php", [
+        echo $this->oView->render("dependente/edit.php", [
             'dependente' => $dependente
         ]);
     }
 
-    public function edit(array $params) {
-        $dependente = $this->dependenteService->getDependente(
-            $params['dependente']
+    public function edit(array $aParams) {
+        $dependente = $this->oDependenteService->getDependente(
+            $aParams['dependente']
         );
-        $this->validatorService->validateDependenteEdit($_POST);
+        $this->oValidatorService->validateDependenteEdit($_POST);
 
-        $this->dependenteService->update($_POST, $dependente['dpe_id']);
+        $this->oDependenteService->update($_POST, $dependente['dpe_id']);
 
         redirectTo($_SERVER['HTTP_REFERER']);
     }
-    public function delete(array $params) {
-        $this->dependenteService->delete((int) $params['dependente']);
+    public function delete(array $aParams) {
+        $this->oDependenteService->delete((int) $aParams['dependente']);
 
         redirectTo($_SERVER['HTTP_REFERER']);
     }

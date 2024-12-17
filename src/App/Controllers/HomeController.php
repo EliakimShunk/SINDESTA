@@ -11,54 +11,56 @@ class HomeController
 {
 
     public function __construct(
-        private TemplateEngine $view,
-        private FiliadoService $filiadoService)
+        private TemplateEngine $oView,
+        private FiliadoService $oFiliadoService)
     {
     }
     public function home()
     {
-        $page = $_GET['p'] ?? 1;
-        $page = (int) $page;
-        $length = 10;
-        $offset = ($page - 1) * $length;
-        $searchTerm = $_GET['s'] ?? null;
-        $filterMonth = $_GET['f'] ?? null;
+        $iPage = $_GET['p'] ?? 1;
+        $iPage = (int) $iPage;
+        $iLength = 10;
+        $iOffset = ($iPage - 1) * $iLength;
+        $mSearchTerm = $_GET['s'] ?? null;
+        $mFilterMonth = $_GET['f'] ?? null;
 
-        [$filiados, $count] = $this->filiadoService->getAllFiliados(
-            $length,
-            $offset
+        [$aFiliados, $iCount] = $this->oFiliadoService->getAllFiliados(
+            $iLength,
+            $iOffset
         );
 
-        $lastPage = ceil($count / $length);
 
-        $pages = $lastPage ? range(1, $lastPage) : [];
+        $iLastPage = ceil($iCount / $iLength);
 
-        $pageLinks = array_map(
-            fn($pageNum) => http_build_query([
-                'p' => $pageNum,
-                's' => $searchTerm,
-                'f' => $filterMonth
+        $aPages = $iLastPage ? range(1, $iLastPage) : [];
+
+        $aPageLinks = array_map(
+            fn($iPageNum) => http_build_query([
+                'p' => $iPageNum,
+                's' => $mSearchTerm,
+                'f' => $mFilterMonth
             ]),
-            $pages
+            $aPages
         );
 
-        echo $this->view->render("/index.php", [
-            'filiados' => $filiados,
-            'currentPage' => $page,
+
+        echo $this->oView->render("/index.php", [
+            'filiados' => $aFiliados,
+            'currentPage' => $iPage,
             'previousPageQuery' => http_build_query([
-                'p' => $page - 1,
-                's' => $searchTerm,
-                'f' => $filterMonth
+                'p' => $iPage - 1,
+                's' => $mSearchTerm,
+                'f' => $mFilterMonth
             ]),
-            'lastPage' => $lastPage,
+            'lastPage' => $iLastPage,
             'nextPageQuery' => http_build_query([
-                'p' => $page + 1,
-                's' => $searchTerm,
-                'f' => $filterMonth
+                'p' => $iPage + 1,
+                's' => $mSearchTerm,
+                'f' => $mFilterMonth
             ]),
-            'pageLinks' => $pageLinks,
-            'searchTerm' => $searchTerm,
-            'filterMonth' => $filterMonth
+            'pageLinks' => $aPageLinks,
+            'searchTerm' => $mSearchTerm,
+            'filterMonth' => $mFilterMonth
         ]);
     }
 }

@@ -8,85 +8,85 @@ use App\Services\{ValidatorService, UserService};
 class UserController
 {
     public function __construct(
-        private TemplateEngine $view,
-        private ValidatorService $validatorService,
-        private UserService $userService)
+        private TemplateEngine $oView,
+        private ValidatorService $oValidatorService,
+        private UserService $oUserService)
     {
     }
 
     public function list()
     {
-        $page = $_GET['p'] ?? 1;
-        $page = (int) $page;
-        $length = 10;
-        $offset = ($page - 1) * $length;
-        $searchTerm = $_GET['s'] ?? null;
+        $iPage = $_GET['p'] ?? 1;
+        $iPage = (int) $iPage;
+        $iLength = 10;
+        $iOffset = ($iPage - 1) * $iLength;
+        $mSearchTerm = $_GET['s'] ?? null;
 
-        [$usuarios, $count] = $this->userService->getAllUsers(
-            $length,
-            $offset
+        [$aUsuarios, $iCount] = $this->oUserService->getAllUsers(
+            $iLength,
+            $iOffset
         );
 
-        $lastPage = ceil($count / $length);
+        $iLastPage = ceil($iCount / $iLength);
 
-        $pages = $lastPage ? range(1, $lastPage) : [];
+        $aPages = $iLastPage ? range(1, $iLastPage) : [];
 
-        $pageLinks = array_map(
-            fn($pageNum) => http_build_query([
-                'p' => $pageNum,
-                's' => $searchTerm,
+        $aPageLinks = array_map(
+            fn($iPageNum) => http_build_query([
+                'p' => $iPageNum,
+                's' => $mSearchTerm,
             ]),
-            $pages
+            $aPages
         );
 
-        echo $this->view->render("/usuario/list.php", [
-            'usuarios' => $usuarios,
-            'currentPage' => $page,
+        echo $this->oView->render("/usuario/list.php", [
+            'usuarios' => $aUsuarios,
+            'currentPage' => $iPage,
             'previousPageQuery' => http_build_query([
-                'p' => $page - 1,
-                's' => $searchTerm
+                'p' => $iPage - 1,
+                's' => $mSearchTerm
             ]),
-            'lastPage' => $lastPage,
+            'lastPage' => $iLastPage,
             'nextPageQuery' => http_build_query([
-                'p' => $page + 1,
-                's' => $searchTerm
+                'p' => $iPage + 1,
+                's' => $mSearchTerm
             ]),
-            'pageLinks' => $pageLinks,
-            'searchTerm' => $searchTerm
+            'pageLinks' => $aPageLinks,
+            'searchTerm' => $mSearchTerm
         ]);
     }
 
-    public function editView(array $params)
+    public function editView(array $aParams)
     {
-        $usuario = $this->userService->getUser(
-            $params['usuario']
+        $aUsuario = $this->oUserService->getUser(
+            $aParams['usuario']
         );
-        if (!$usuario) {
+        if (!$aUsuario) {
             redirectTo('/');
         }
-        echo $this->view->render("usuario/edit.php", [
-            'usuario' => $usuario
+        echo $this->oView->render("usuario/edit.php", [
+            'usuario' => $aUsuario
         ]);
     }
-    public function edit(array $params) {
-        $usuario = $this->userService->getUser(
-            $params['usuario']
+    public function edit(array $aParams) {
+        $aUsuario = $this->oUserService->getUser(
+            $aParams['usuario']
         );
 
-        if (!$usuario) {
+        if (!$aUsuario) {
             redirectTo('/');
         }
-        $this->validatorService->validateUserEdit($_POST);
+        $this->oValidatorService->validateUserEdit($_POST);
 
-        $this->userService->update($_POST, $usuario['usr_id']);
+        $this->oUserService->update($_POST, $aUsuario['usr_id']);
 
         redirectTo($_SERVER['HTTP_REFERER']);
         
     }
 
-    public function delete(array $params)
+    public function delete(array $aParams)
     {
-        $this->userService->delete((int) $params['usuario']);
+        $this->oUserService->delete((int) $aParams['usuario']);
 
         redirectTo('/usuario');
         

@@ -10,52 +10,52 @@ use Framework\TemplateEngine;
 class FiliadoController
 {
     public function __construct(
-        private TemplateEngine $view,
-        private ValidatorService $validatorService,
-        private FiliadoService $filiadoService
+        private TemplateEngine $oView,
+        private ValidatorService $oValidatorService,
+        private FiliadoService $oFiliadoService
     ) {
     }
     public function createView()
     {
-        echo $this->view->render("filiado/create.php");
+        echo $this->oView->render("filiado/create.php");
     }
     public function create() {
-        $this->validatorService->validateFiliado($_POST);
+        $this->oValidatorService->validateFiliado($_POST);
 
-        $this->filiadoService->create($_POST);
+        $this->oFiliadoService->create($_POST);
 
         redirectTo('/');
     }
 
-    public function editView(array $params)
+    public function editView(array $aParams)
     {
-        $filiado = $this->filiadoService->getFiliado(
-            $params['filiado']
+        $aFiliado = $this->oFiliadoService->getFiliado(
+            $aParams['filiado']
         );
-        if (!$filiado) {
+        if (!$aFiliado) {
             redirectTo('/');
         }
-        echo $this->view->render("filiado/edit.php", [
-            'filiado' => $filiado
+        echo $this->oView->render("filiado/edit.php", [
+            'filiado' => $aFiliado
         ]);
     }
-    public function edit(array $params) {
-        $filiado = $this->filiadoService->getFiliado(
-            $params['filiado']
+    public function edit(array $aParams) {
+        $aFiliado = $this->oFiliadoService->getFiliado(
+            $aParams['filiado']
         );
 
-        if (!$filiado) {
+        if (!$aFiliado) {
             redirectTo('/');
         }
-        $this->validatorService->validateFiliadoEdit($_POST);
+        $this->oValidatorService->validateFiliadoEdit($_POST);
 
-        $this->filiadoService->update($_POST, $filiado['flo_id']);
+        $this->oFiliadoService->update($_POST, $aFiliado['flo_id']);
 
         redirectTo($_SERVER['HTTP_REFERER']);
     }
 
-    public function delete(array $params) {
-        $this->filiadoService->delete((int) $params['filiado']);
+    public function delete(array $aParams) {
+        $this->oFiliadoService->delete((int) $aParams['filiado']);
 
         redirectTo('/');
     }

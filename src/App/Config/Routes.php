@@ -13,28 +13,28 @@ use App\Controllers\{HomeController,
     UserController};
 use App\Middleware\{AdminRequiredMiddleware, AuthRequiredMiddleware, GuestOnlyMiddleware};
 
-function registerRoutes(App $app) {
-    $app->get('/', [HomeController::class, 'home'])->add(AuthRequiredMiddleware::class);
-    $app->get('/cadastrar', [AuthController::class, 'registerView'])->add(AdminRequiredMiddleware::class);
-    $app->post('/cadastrar', [AuthController::class, 'register'])->add(AdminRequiredMiddleware::class);
-    $app->get('/login', [AuthController::class, 'loginView'])->add(GuestOnlyMiddleware::class);
-    $app->post('/login', [AuthController::class, 'login'])->add(GuestOnlyMiddleware::class);
-    $app->get('/logout', [AuthController::class, 'logout'])->add(AuthRequiredMiddleware::class);
-    $app->get('/usuario', [UserController::class, 'list'])->add(AdminRequiredMiddleware::class);
-    $app->get('/usuario/{usuario}', [UserController::class, 'editView'])->add(AdminRequiredMiddleware::class);
-    $app->post('/usuario/{usuario}', [UserController::class, 'edit'])->add(AdminRequiredMiddleware::class);
-    $app->delete('/usuario/{usuario}', [UserController::class, 'delete'])->add(AdminRequiredMiddleware::class);
-    $app->get('/filiado', [FiliadoController::class, 'createView'])->add(AuthRequiredMiddleware::class);
-    $app->post('/filiado', [FiliadoController::class, 'create'])->add(AuthRequiredMiddleware::class);
-    $app->get('/filiado/{filiado}', [FiliadoController::class, 'editView'])->add(AuthRequiredMiddleware::class);
-    $app->post('/filiado/{filiado}', [FiliadoController::class, 'edit'])->add(AuthRequiredMiddleware::class);
-    $app->delete('/filiado/{filiado}', [FiliadoController::class, 'delete'])->add(AuthRequiredMiddleware::class);
-    $app->get('/filiado/{filiado}/dependentes', [DependenteController::class, 'list'])->add(AuthRequiredMiddleware::class);
-    $app->get('/filiado/{filiado}/dependente', [DependenteController::class, 'createView'])->add(AuthRequiredMiddleware::class);
-    $app->post('/filiado/{filiado}/dependente', [DependenteController::class, 'create'])->add(AuthRequiredMiddleware::class);
-    $app->get('/filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'editView'])->add(AuthRequiredMiddleware::class);
-    $app->post('/filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'edit'])->add(AuthRequiredMiddleware::class);
-    $app->delete('filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'delete'])->add(AuthRequiredMiddleware::class);
+function registerRoutes(App $loApp) {
+    $loApp->get('/', [HomeController::class, 'home'])->add(AuthRequiredMiddleware::class);
+    $loApp->get('/cadastrar', [AuthController::class, 'registerView'])->add(AdminRequiredMiddleware::class);
+    $loApp->post('/cadastrar', [AuthController::class, 'register'])->add(AdminRequiredMiddleware::class);
+    $loApp->get('/login', [AuthController::class, 'loginView'])->add(GuestOnlyMiddleware::class);
+    $loApp->post('/login', [AuthController::class, 'login'])->add(GuestOnlyMiddleware::class);
+    $loApp->get('/logout', [AuthController::class, 'logout'])->add(AuthRequiredMiddleware::class);
+    $loApp->get('/usuario', [UserController::class, 'list'])->add(AdminRequiredMiddleware::class);
+    $loApp->get('/usuario/{usuario}', [UserController::class, 'editView'])->add(AdminRequiredMiddleware::class);
+    $loApp->post('/usuario/{usuario}', [UserController::class, 'edit'])->add(AdminRequiredMiddleware::class);
+    $loApp->delete('/usuario/{usuario}', [UserController::class, 'delete'])->add(AdminRequiredMiddleware::class);
+    $loApp->get('/filiado', [FiliadoController::class, 'createView'])->add(AuthRequiredMiddleware::class);
+    $loApp->post('/filiado', [FiliadoController::class, 'create'])->add(AuthRequiredMiddleware::class);
+    $loApp->get('/filiado/{filiado}', [FiliadoController::class, 'editView'])->add(AuthRequiredMiddleware::class);
+    $loApp->post('/filiado/{filiado}', [FiliadoController::class, 'edit'])->add(AuthRequiredMiddleware::class);
+    $loApp->delete('/filiado/{filiado}', [FiliadoController::class, 'delete'])->add(AuthRequiredMiddleware::class);
+    $loApp->get('/filiado/{filiado}/dependentes', [DependenteController::class, 'list'])->add(AuthRequiredMiddleware::class);
+    $loApp->get('/filiado/{filiado}/dependente', [DependenteController::class, 'createView'])->add(AuthRequiredMiddleware::class);
+    $loApp->post('/filiado/{filiado}/dependente', [DependenteController::class, 'create'])->add(AuthRequiredMiddleware::class);
+    $loApp->get('/filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'editView'])->add(AuthRequiredMiddleware::class);
+    $loApp->post('/filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'edit'])->add(AuthRequiredMiddleware::class);
+    $loApp->delete('filiado/{filiado}/dependente/{dependente}', [DependenteController::class, 'delete'])->add(AuthRequiredMiddleware::class);
 
-    $app->setErrorHandler([ErrorController::class, 'notFound']);
+    $loApp->setErrorHandler([ErrorController::class, 'notFound']);
 }

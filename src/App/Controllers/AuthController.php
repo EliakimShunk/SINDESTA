@@ -10,63 +10,44 @@ use App\Services\{ValidatorService, UserService};
 class AuthController
 {
     public function __construct(
-        private TemplateEngine $view,
-        private ValidatorService $validatorService,
-        private UserService $userService)
+        private TemplateEngine $oView,
+        private ValidatorService $oValidatorService,
+        private UserService $oUserService)
     {
     }
 
     public function registerView()
     {
-        echo $this->view->render('register.php');
+        echo $this->oView->render('register.php');
     }
 
-    public function registerOld()
-    {
-        $this->validatorService->validateRegister($_POST);
-
-        $this->userService->isEmailTakenOld($_POST['email']);
-
-        $this->userService->create($_POST);
-
-        redirectTo('/');
-    }
 
     public function register()
     {
-        $this->validatorService->validateRegister($_POST);
+        $this->oValidatorService->validateRegister($_POST);
 
-        $this->userService->isUsernameTaken($_POST['usuario']);
+        $this->oUserService->isUsernameTaken($_POST['usuario']);
 
-        $this->userService->create($_POST);
+        $this->oUserService->create($_POST);
 
         redirectTo('/usuario');
     }
     public function loginView()
     {
-        echo $this->view->render('login.php');
-    }
-
-    public function loginOld()
-    {
-        $this->validatorService->validateLogin($_POST);
-
-        $this->userService->login($_POST);
-
-        redirectTo('/');
+        echo $this->oView->render('login.php');
     }
 
     public function login()
     {
-        $this->validatorService->validateLogin($_POST);
+        $this->oValidatorService->validateLogin($_POST);
 
-        $this->userService->login($_POST);
+        $this->oUserService->login($_POST);
 
         redirectTo('/');
     }
 
     public function logout() {
-        $this->userService->logout();
+        $this->oUserService->logout();
         redirectTo('/login');
     }
 }
