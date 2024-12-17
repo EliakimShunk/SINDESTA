@@ -10,10 +10,7 @@ use Framework\Rules\{
     CpfFormatRule,
     RequiredRule,
     TelefoneFormatRule,
-    EmailRule,
-    MinRule,
     InRule,
-    UrlRule,
     MatchRule,
     LengthMaxRule,
     NumericRule,
@@ -27,10 +24,7 @@ class ValidatorService
         $this->validator = new Validator();
 
         $this->validator->add('required', new RequiredRule());
-        $this->validator->add('email', new EmailRule());
-        $this->validator->add('min', new MinRule());
         $this->validator->add('in', new InRule());
-        $this->validator->add('url', new UrlRule());
         $this->validator->add('match', new MatchRule());
         $this->validator->add('lengthMax', new LengthMaxRule());
         $this->validator->add('numeric', new NumericRule());
@@ -43,8 +37,8 @@ class ValidatorService
     public function validateRegister(array $formData)
     {
         $this->validator->validate($formData, [
-            'usuario' => ['required'],
-            'password' => ['required'],
+            'usuario' => ['required', 'lengthMax:46'],
+            'password' => ['required', 'lengthMax:256'],
             'confirmPassword' => ['required', 'match:password'],
             'isAdmin' => ['required']
         ]);
@@ -57,51 +51,43 @@ class ValidatorService
 
         ]);
     }
-    public function validateTransaction(array $formData) {
-        $this->validator->validate($formData, [
-            'description' => ['required', 'lengthMax:255'],
-            'amount' => ['required', 'numeric'],
-            'date' => ['required', 'dateFormat:Y-m-d']
-
-        ]);
-    }
     public function validateFiliado(array $formData) {
         $this->validator->validate($formData, [
-            'nome' => ['required'],
-            'cpf' => ['required', 'cpf'],
-            'rg' => ['required'],
+            'nome' => ['required', 'lengthMax:51'],
+            'cpf' => ['required', 'cpf', 'lengthMax:15'],
+            'rg' => ['required', 'lengthMax:13'],
             'birthDate' => ['required', 'dateFormat:Y-m-d'],
-            'company' => ['required'],
-            'position' => ['required'],
-            'status' => ['required'],
-            'phone' => ['required', 'telefone'],
-            'cellphone' => ['required', 'celular']
+            'company' => ['required', 'lengthMax:46'],
+            'position' => ['required', 'lengthMax:46'],
+            'status' => ['required', 'lengthMax:46'],
+            'phone' => ['required', 'telefone', 'lengthMax:16'],
+            'cellphone' => ['required', 'celular', 'lengthMax:16']
         ]);
     }
     public function validateFiliadoEdit(array $formData) {
 
         $this->validator->validate($formData, [
-            'company' => ['required'],
-            'position' => ['required'],
-            'status' => ['required']
+            'company' => ['required', 'lengthMax:46'],
+            'position' => ['required', 'lengthMax:46'],
+            'status' => ['required', 'lengthMax:46']
         ]);
 
     }
     public function validateUserEdit(array $formData) {
         $this->validator->validate($formData, [
-            'usuario' => ['required']
+            'usuario' => ['required', 'lengthMax:46']
         ]);
     }
     public function validateDependente(array $formData) {
         $this->validator->validate($formData, [
-            'nome' => ['required'],
+            'nome' => ['required', 'lengthMax:46'],
             'birthDate' => ['required', 'dateFormat:Y-m-d'],
-            'relationship' => ['required']
+            'relationship' => ['required', 'lengthMax:46']
         ]);
     }
     public function validateDependenteEdit(array $formData) {
         $this->validator->validate($formData, [
-            'nome' => ['required']
+            'nome' => ['required', 'lengthMax:46']
         ]);
     }
 }

@@ -91,30 +91,30 @@
             <?php foreach ($filiados as $filiado) : ?>
                 <tr>
                     <!-- Nome -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_name'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['nome'])?></td>
                     <!-- CPF -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_cpf'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['cpf'])?></td>
                     <!-- RG -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_rg'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['rg'])?></td>
                     <!-- Data de Nascimento -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['formatted_birthDate'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['birthDate'])?></td>
                     <!-- Idade -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_age']); ?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['age']); ?></td>
                     <!-- Empresa -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_company'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['company'])?></td>
                     <!-- Posicao -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_position'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['position'])?></td>
                     <!-- Situcao -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_status'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['status'])?></td>
                     <!-- Telefone -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_phone'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['phone'])?></td>
                     <!-- Celular -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['flo_cellphone'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['cellphone'])?></td>
                     <!-- Ultima Atualizacao -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['formatted_lastUpdate'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($filiado['lastUpdate'])?></td>
                     <!-- Actions -->
                     <td class="p-4 text-sm text-gray-600 flex justify-center space-x-2">
-                        <a href="/filiado/<?php echo e($filiado['flo_id']); ?>/dependentes" class="p-2 bg-amber-50 text-xs text-amber-900 hover:bg-amber-500
+                        <a href="/filiado/<?php echo e($filiado['id']); ?>/dependentes" class="p-2 bg-amber-50 text-xs text-amber-900 hover:bg-amber-500
                 hover:text-white transition rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -122,7 +122,7 @@
                                 M14 3v5h5M16 13H8M16 17H8M10 9H8" />
                             </svg>
                         </a>
-                        <a href="/filiado/<?php echo e($filiado['flo_id']); ?>" class="p-2 bg-emerald-50 text-xs
+                        <a href="/filiado/<?php echo e($filiado['id']); ?>" class="p-2 bg-emerald-50 text-xs
                 text-emerald-900 hover:bg-emerald-500 hover:text-white transition rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -132,7 +132,7 @@
                                0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
                         </a>
-                        <form action="/filiado/<?php echo e($filiado['flo_id']); ?>" method="post">
+                        <form action="/filiado/<?php echo e($filiado['id']); ?>" method="post">
                             <input type="hidden" name="_method" value="delete"/>
 
                             <?php include $this->resolve('partials/_csrf.php'); ?>

@@ -6,6 +6,7 @@ namespace App\Services;
 
 use Framework\Database;
 use Framework\Exceptions\ValidationException;
+use App\Models\User;
 
 class UserService
 {
@@ -25,6 +26,7 @@ class UserService
         }
     }
     public function create(array $formData) {
+        $user = User::fromArray($formData);
 
         $password = password_hash($formData['password'], PASSWORD_BCRYPT, ['cost' => 12]);
 
@@ -32,9 +34,9 @@ class UserService
             "INSERT INTO usr_usuario (usr_username, usr_password, usr_is_admin)
                    VALUES (:usuario, :password, :isAdmin)",
             [
-                'usuario' => $formData['usuario'],
+                'usuario' => $user->getUsername(),
                 'password' => $password,
-                'isAdmin' => $formData['isAdmin']
+                'isAdmin' => $user->getIsAdmin()
             ]
         );
     }
@@ -46,7 +48,7 @@ class UserService
             'usuario' => "%{$searchTerm}%"
         ];
 
-        $usuarios = $this->db->query(
+        $usuariosData = $this->db->query(
             "SELECT *, DATE_FORMAT(usr_lastUpdate, '%d/%m/%Y as %H:%i:%s') AS formatted_lastUpdate
             FROM `usr_usuario`
             WHERE usr_username LIKE :usuario
@@ -59,6 +61,20 @@ class UserService
             WHERE usr_username LIKE :usuario",
             $params
         )->count();
+
+        $usuarios = [];
+        foreach ($usuariosData as $usuarioData) {
+            $usuario = new User(
+                id: $usuarioData['usr_id'],
+                username: $usuarioData['usr_username'],
+                lastUpdate: $usuarioData['formatted_lastUpdate'],
+                isAdmin: $usuarioData['usr_is_admin']
+            );
+
+            $usuarioArray = $usuario->toArray();
+
+            $usuarios[] = $usuarioArray;
+        }
 
         return [$usuarios, $usuarioCount];
 

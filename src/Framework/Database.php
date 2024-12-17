@@ -44,11 +44,6 @@ class Database
         return $this->stmt->fetch();
     }
 
-    public function id()
-    {
-        return $this->connection->lastInsertId();
-    }
-
     public function findAll()
     {
         return $this->stmt->fetchAll();

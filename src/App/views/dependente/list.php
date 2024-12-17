@@ -34,14 +34,14 @@
             <?php foreach ($dependentes as $dependente) : ?>
                 <tr>
                     <!-- Nome -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['dpe_name'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['nome'])?></td>
                     <!-- Data de Nascimento -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['dpe_birthDate'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['birth_date'])?></td>
                     <!-- Relacionamento -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['dpe_relationship'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['relationship'])?></td>
                     <!-- Acoes -->
                     <td class="p-4 text-sm text-gray-600 flex justify-center space-x-2">
-                        <a href="/filiado/<?php echo e($filiado['flo_id']); ?>/dependente/<?php echo e($dependente['dpe_id']); ?>" class="p-2 bg-emerald-50 text-xs
+                        <a href="/filiado/<?php echo e($dependente['filiado_id']); ?>/dependente/<?php echo e($dependente['id']); ?>" class="p-2 bg-emerald-50 text-xs
                 text-emerald-900 hover:bg-emerald-500 hover:text-white transition rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -51,7 +51,7 @@
                                0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
                         </a>
-                        <form action="/filiado/<?php echo e($filiado['flo_id']); ?>/dependente/<?php echo e($dependente['dpe_id']); ?>" method="post">
+                        <form action="/filiado/<?php echo e($dependente['filiado_id']); ?>/dependente/<?php echo e($dependente['id']); ?>" method="post">
                             <input type="hidden" name="_method" value="delete"/>
 
                             <?php include $this->resolve('partials/_csrf.php'); ?>

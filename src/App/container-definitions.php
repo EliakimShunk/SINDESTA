@@ -8,9 +8,7 @@ use App\Services\{
     DependenteService,
     FiliadoService,
     ValidatorService,
-    UserService,
-    TransactionService,
-    ReceiptService};
+    UserService};
 
 return [
     TemplateEngine::class => fn() => new TemplateEngine(Paths::VIEW),
@@ -25,11 +23,6 @@ return [
 
         return new UserService($db);
     },
-    TransactionService::class => function (Container $container) {
-        $db = $container->get(Database::class);
-
-        return new TransactionService($db);
-    },
     FiliadoService::class => function (Container $container) {
         $db = $container->get(Database::class);
 
@@ -39,10 +32,5 @@ return [
         $db = $container->get(Database::class);
 
         return new DependenteService($db);
-    },
-    ReceiptService::class => function (Container $container) {
-        $db = $container->get(Database::class);
-
-        return new ReceiptService($db);
     }
 ];

@@ -47,16 +47,16 @@
             <?php foreach ($usuarios as $usuario) : ?>
                 <tr>
                     <!-- ID -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($usuario['usr_id'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($usuario['id'])?></td>
                     <!-- Nome -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($usuario['usr_username'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($usuario['username'])?></td>
                     <!-- Tipo -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($usuario['usr_is_admin'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($usuario['isAdmin'])?></td>
                     <!-- Ultima Atualizacao -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($usuario['formatted_lastUpdate'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($usuario['lastUpdate'])?></td>
                     <!-- Acoes -->
                     <td class="p-4 text-sm text-gray-600 flex justify-center space-x-2">
-                        <a href="/usuario/<?php echo e($usuario['usr_id']); ?>" class="p-2 bg-emerald-50 text-xs
+                        <a href="/usuario/<?php echo e($usuario['id']); ?>" class="p-2 bg-emerald-50 text-xs
                 text-emerald-900 hover:bg-emerald-500 hover:text-white transition rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -66,7 +66,7 @@
                                0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
                         </a>
-                        <form action="/usuario/<?php echo e($usuario['usr_id']); ?>" method="post">
+                        <form action="/usuario/<?php echo e($usuario['id']); ?>" method="post">
                             <input type="hidden" name="_method" value="delete"/>
 
                             <?php include $this->resolve('partials/_csrf.php'); ?>

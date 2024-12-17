@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Services;
 
 use Framework\Database;
+use App\Models\Filiado;
 
 class FiliadoService
 {
@@ -12,7 +13,7 @@ class FiliadoService
     }
 
     public function create(array $formData) {
-        $formatedDate = "{$formData['birthDate']} 00:00:00";
+        $filiado = Filiado::fromArray($formData);
 
         $this->db->query(
             "INSERT INTO `flo_filiado` (
@@ -36,16 +37,15 @@ class FiliadoService
                     :phone,
                     :cellphone) ",
             [
-                "nome" => $formData['nome'],
-                "cpf" => $formData['cpf'],
-                "rg" => $formData['rg'],
-                "birthDate" => $formatedDate,
-                "company" => $formData['company'],
-                "position" => $formData['position'],
-                "status" => $formData['status'],
-                "phone" => $formData['phone'],
-                "cellphone" => $formData['cellphone']
-
+                'nome' => $filiado->getNome(),
+                'cpf' => $filiado->getCpf(),
+                'rg' => $filiado->getRg(),
+                'birthDate' => "{$filiado->getBirthDate()} 00:00:00",
+                'company' => $filiado->getCompany(),
+                'position' => $filiado->getPosition(),
+                'status' => $filiado->getStatus(),
+                'phone' => $filiado->getPhone(),
+                'cellphone' => $filiado->getCellphone(),
             ]
         );
     }
@@ -61,7 +61,7 @@ class FiliadoService
             'nome' => "%{$searchTerm}%"
         ];
 
-        $filiados = $this->db->query(
+        $filiadosData = $this->db->query(
             "SELECT *, DATE_FORMAT(flo_birthDate, '%d/%m/%Y') AS formatted_birthDate,
             DATE_FORMAT(flo_lastUpdate, '%d/%m/%Y as %H:%m:%s') AS formatted_lastUpdate
             FROM `flo_filiado`
@@ -78,18 +78,34 @@ class FiliadoService
             $params
         )->count();
 
-        foreach ($filiados as &$filiado) {
-            $tz = new \DateTimeZone('America/Bahia');
+        $tz = new \DateTimeZone('America/Bahia');
 
-            $birthDate = \DateTime::createFromFormat('Y-m-d H:i:s', $filiado['flo_birthDate'], $tz);
+        // Converter os dados em objetos Filiado
+        $filiados = [];
+        foreach ($filiadosData as $filiadoData) {
+            $birthDate = \DateTime::createFromFormat('Y-m-d H:i:s', $filiadoData['flo_birthDate'], $tz);
+            $age = $birthDate ? $birthDate->diff(new \DateTime('now', $tz))->y : null;
 
-            if ($birthDate) {
-                $age = $birthDate->diff(new \DateTime('now', $tz))->y;
-                $filiado['flo_age'] = $age;
-            } else {
-                $filiado['flo_age'] = null;
-            }
+            $filiado = new Filiado(
+                nome: $filiadoData['flo_name'],
+                cpf: $filiadoData['flo_cpf'],
+                rg: $filiadoData['flo_rg'],
+                birthDate: $filiadoData['formatted_birthDate'],
+                company: $filiadoData['flo_company'],
+                position: $filiadoData['flo_position'],
+                status: $filiadoData['flo_status'],
+                phone: $filiadoData['flo_phone'],
+                cellphone: $filiadoData['flo_cellphone'],
+                id: (int) $filiadoData['flo_id'],
+                lastUpdate: $filiadoData['formatted_lastUpdate'] ?? null
+            );
+            // Adiciona a idade calculada diretamente no objeto Filiado
+            $filiadoArray = $filiado->toArray();
+            $filiadoArray['age'] = $age;
+
+            $filiados[] = $filiadoArray;
         }
+
 
         return [$filiados, $filiadoCount];
     }
