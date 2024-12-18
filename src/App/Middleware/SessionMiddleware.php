@@ -10,16 +10,16 @@ use App\Exceptions\SessionException;
 class SessionMiddleware implements MiddlewareInterface
 {
 
-    public function process(callable $next)
+    public function process(callable $loNext)
     {
         if (session_status() === PHP_SESSION_ACTIVE) {
             throw new SessionException('A sessao ja esta ativa.');
         }
 
-        if (headers_sent($filename, $line)) {
+        if (headers_sent($sFilename, $sLine)) {
             throw new SessionException(
                 "Header ja foi enviado. 
-                Considere ativar output buffering. Dados recebidos de {$filename} - Linha {$line}");
+                Considere ativar output buffering. Dados recebidos de {$sFilename} - Linha {$sLine}");
         }
 
         session_set_cookie_params([
@@ -30,7 +30,7 @@ class SessionMiddleware implements MiddlewareInterface
 
         session_start();
 
-        $next();
+        $loNext();
 
         session_write_close();
     }

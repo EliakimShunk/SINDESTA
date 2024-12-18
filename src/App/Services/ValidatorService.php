@@ -18,41 +18,41 @@ use Framework\Rules\{
 
 class ValidatorService
 {
-    private Validator $validator;
+    private Validator $oValidator;
     public function __construct()
     {
-        $this->validator = new Validator();
+        $this->oValidator = new Validator();
 
-        $this->validator->add('required', new RequiredRule());
-        $this->validator->add('in', new InRule());
-        $this->validator->add('match', new MatchRule());
-        $this->validator->add('lengthMax', new LengthMaxRule());
-        $this->validator->add('numeric', new NumericRule());
-        $this->validator->add('dateFormat', new DateFormatRule());
-        $this->validator->add('cpf', new CpfFormatRule());
-        $this->validator->add('celular', new CelularFormatRule());
-        $this->validator->add('telefone', new TelefoneFormatRule());
+        $this->oValidator->add('required', new RequiredRule());
+        $this->oValidator->add('in', new InRule());
+        $this->oValidator->add('match', new MatchRule());
+        $this->oValidator->add('lengthMax', new LengthMaxRule());
+        $this->oValidator->add('numeric', new NumericRule());
+        $this->oValidator->add('dateFormat', new DateFormatRule());
+        $this->oValidator->add('cpf', new CpfFormatRule());
+        $this->oValidator->add('celular', new CelularFormatRule());
+        $this->oValidator->add('telefone', new TelefoneFormatRule());
     }
 
-    public function validateRegister(array $formData)
+    public function validateRegister(array $aFormData)
     {
-        $this->validator->validate($formData, [
+        $this->oValidator->validate($aFormData, [
             'usuario' => ['required', 'lengthMax:46'],
             'password' => ['required', 'lengthMax:256'],
             'confirmPassword' => ['required', 'match:password'],
             'isAdmin' => ['required']
         ]);
     }
-    public function validateLogin(array $formData)
+    public function validateLogin(array $aFormData)
     {
-        $this->validator->validate($formData, [
+        $this->oValidator->validate($aFormData, [
             'usuario' => ['required'],
             'password' => ['required']
 
         ]);
     }
-    public function validateFiliado(array $formData) {
-        $this->validator->validate($formData, [
+    public function validateFiliado(array $aFormData) {
+        $this->oValidator->validate($aFormData, [
             'nome' => ['required', 'lengthMax:51'],
             'cpf' => ['required', 'cpf', 'lengthMax:15'],
             'rg' => ['required', 'lengthMax:13'],
@@ -64,29 +64,29 @@ class ValidatorService
             'cellphone' => ['required', 'celular', 'lengthMax:16']
         ]);
     }
-    public function validateFiliadoEdit(array $formData) {
+    public function validateFiliadoEdit(array $aFormData) {
 
-        $this->validator->validate($formData, [
+        $this->oValidator->validate($aFormData, [
             'company' => ['required', 'lengthMax:46'],
             'position' => ['required', 'lengthMax:46'],
             'status' => ['required', 'lengthMax:46']
         ]);
 
     }
-    public function validateUserEdit(array $formData) {
-        $this->validator->validate($formData, [
+    public function validateUserEdit(array $aFormData) {
+        $this->oValidator->validate($aFormData, [
             'usuario' => ['required', 'lengthMax:46']
         ]);
     }
-    public function validateDependente(array $formData) {
-        $this->validator->validate($formData, [
+    public function validateDependente(array $aFormData) {
+        $this->oValidator->validate($aFormData, [
             'nome' => ['required', 'lengthMax:46'],
             'birthDate' => ['required', 'dateFormat:Y-m-d'],
             'relationship' => ['required', 'lengthMax:46']
         ]);
     }
-    public function validateDependenteEdit(array $formData) {
-        $this->validator->validate($formData, [
+    public function validateDependenteEdit(array $aFormData) {
+        $this->oValidator->validate($aFormData, [
             'nome' => ['required', 'lengthMax:46']
         ]);
     }

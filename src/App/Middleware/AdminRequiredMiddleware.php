@@ -7,12 +7,12 @@ use Framework\Contracts\MiddlewareInterface;
 
 class AdminRequiredMiddleware implements MiddlewareInterface
 {
-    public function process(callable $next)
+    public function process(callable $loNext)
     {
         if (($_SESSION['user'] !== 1)) {
             redirectTo('/');
         }
 
-        $next();
+        $loNext();
     }
 }

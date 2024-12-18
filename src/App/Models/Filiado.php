@@ -6,131 +6,131 @@ namespace App\Models;
 
 class Filiado
 {
-    private int $id;
-    private string $nome;
-    private string $cpf;
-    private string $rg;
-    private string $birthDate;
-    private string $company;
-    private string $position;
-    private string $status;
-    private string $phone;
-    private string $cellphone;
-    private string $lastUpdate;
+    private ?int $iId;
+    private string $sNome;
+    private string $sCpf;
+    private string $sRg;
+    private string $sBirthDate;
+    private string $sCompany;
+    private string $sPosition;
+    private string $sStatus;
+    private string $sPhone;
+    private string $sCellphone;
+    private ?string $sLastUpdate;
 
     public function __construct(
-        string $nome,
-        string $cpf,
-        string $rg,
-        string $birthDate,
-        string $company,
-        string $position,
-        string $status,
-        string $phone,
-        string $cellphone,
-        int $id = null,
-        string $lastUpdate = null
+        string $sNome,
+        string $sCpf,
+        string $sRg,
+        string $sBirthDate,
+        string $sCompany,
+        string $sPosition,
+        string $sStatus,
+        string $sPhone,
+        string $sCellphone,
+        ?int $iId = null,
+        ?string $sLastUpdate = null
     ) {
-        $this->id = $id;
-        $this->nome = $nome;
-        $this->cpf = $cpf;
-        $this->rg = $rg;
-        $this->birthDate = $birthDate;
-        $this->company = $company;
-        $this->position = $position;
-        $this->status = $status;
-        $this->phone = $phone;
-        $this->cellphone = $cellphone;
-        $this->lastUpdate = $lastUpdate;
+        $this->iId = $iId;
+        $this->sNome = $sNome;
+        $this->sCpf = $sCpf;
+        $this->sRg = $sRg;
+        $this->sBirthDate = $sBirthDate;
+        $this->sCompany = $sCompany;
+        $this->sPosition = $sPosition;
+        $this->sStatus = $sStatus;
+        $this->sPhone = $sPhone;
+        $this->sCellphone = $sCellphone;
+        $this->sLastUpdate = $sLastUpdate;
     }
 
     // Getters e Setters
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->iId;
     }
 
     public function getNome(): string
     {
-        return $this->nome;
+        return $this->sNome;
     }
 
     public function getCpf(): string
     {
-        return $this->cpf;
+        return $this->sCpf;
     }
 
     public function getRg(): string
     {
-        return $this->rg;
+        return $this->sRg;
     }
 
     public function getBirthDate(): string
     {
-        return $this->birthDate;
+        return $this->sBirthDate;
     }
 
     public function getCompany(): string
     {
-        return $this->company;
+        return $this->sCompany;
     }
 
     public function getPosition(): string
     {
-        return $this->position;
+        return $this->sPosition;
     }
 
     public function getStatus(): string
     {
-        return $this->status;
+        return $this->sStatus;
     }
 
     public function getPhone(): string
     {
-        return $this->phone;
+        return $this->sPhone;
     }
 
     public function getCellphone(): string
     {
-        return $this->cellphone;
+        return $this->sCellphone;
     }
 
     public function getLastUpdate(): ?string
     {
-        return $this->lastUpdate;
+        return $this->sLastUpdate;
     }
 
     public function toArray(): array
     {
         return [
-            'id' => $this->id,
-            'nome' => $this->nome,
-            'cpf' => $this->cpf,
-            'rg' => $this->rg,
-            'birthDate' => $this->birthDate,
-            'company' => $this->company,
-            'position' => $this->position,
-            'status' => $this->status,
-            'phone' => $this->phone,
-            'cellphone' => $this->cellphone,
-            'lastUpdate' => $this->lastUpdate,
+            'id' => $this->iId,
+            'nome' => $this->sNome,
+            'cpf' => $this->sCpf,
+            'rg' => $this->sRg,
+            'birthDate' => $this->sBirthDate,
+            'company' => $this->sCompany,
+            'position' => $this->sPosition,
+            'status' => $this->sStatus,
+            'phone' => $this->sPhone,
+            'cellphone' => $this->sCellphone,
+            'lastUpdate' => $this->sLastUpdate,
         ];
     }
 
-    public static function fromArray(array $data): self
+    public static function fromArray(array $aData): self
     {
         return new self(
-            $data['nome'],
-            $data['cpf'],
-            $data['rg'],
-            $data['birthDate'],
-            $data['company'],
-            $data['position'],
-            $data['status'],
-            $data['phone'],
-            $data['cellphone'],
-            $data['id'],
-            $data['lastUpdate']
+            $aData['nome'],
+            $aData['cpf'],
+            $aData['rg'],
+            $aData['birthDate'],
+            $aData['company'],
+            $aData['position'],
+            $aData['status'],
+            $aData['phone'],
+            $aData['cellphone'],
+            $aData['id'],
+            $aData['lastUpdate']
         );
     }
 }

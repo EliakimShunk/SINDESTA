@@ -8,13 +8,13 @@ use Framework\Contracts\MiddlewareInterface;
 
 class CsrfGuardMiddleware implements MiddlewareInterface
 {
-    public function process(callable $next)
+    public function process(callable $loNext)
     {
-        $requestMethod = strtoupper($_SERVER['REQUEST_METHOD']);
-        $validMethods = ['POST', 'PATCH', 'DELETE'];
+        $sRequestMethod = strtoupper($_SERVER['REQUEST_METHOD']);
+        $aValidMethods = ['POST', 'PATCH', 'DELETE'];
 
-        if (!in_array($requestMethod, $validMethods)) {
-            $next();
+        if (!in_array($sRequestMethod, $aValidMethods)) {
+            $loNext();
             return;
         }
 
@@ -24,6 +24,6 @@ class CsrfGuardMiddleware implements MiddlewareInterface
 
         unset($_SESSION['token']);
 
-        $next();
+        $loNext();
     }
 }

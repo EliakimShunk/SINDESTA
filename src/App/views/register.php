@@ -8,14 +8,14 @@
         <!-- Usuario -->
         <label class="block">
             <span class="text-gray-700">Usuario</span>
-            <input value="<?php echo e($oldFormData['usuario'] ?? ''); ?>" name ="usuario"
+            <input value="<?php echo e($aOldFormData['usuario'] ?? ''); ?>" name ="usuario"
                 type="text"
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="Insira o nome do usuario"
             />
-            <?php if (array_key_exists('usuario', $errors)) : ?>
+            <?php if (array_key_exists('usuario', $aErrors)) : ?>
             <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                <?php echo e($errors['usuario'][0]); ?>
+                <?php echo e($aErrors['usuario'][0]); ?>
             </div>
             <?php endif; ?>
         </label>
@@ -27,9 +27,9 @@
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="Insira a senha"
             />
-            <?php if (array_key_exists('password', $errors)) : ?>
+            <?php if (array_key_exists('password', $aErrors)) : ?>
                 <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo e($errors['password'][0]); ?>
+                    <?php echo e($aErrors['password'][0]); ?>
                 </div>
             <?php endif; ?>
         </label>
@@ -41,9 +41,9 @@
                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="Confirme a senha"
             />
-            <?php if (array_key_exists('confirmPassword', $errors)) : ?>
+            <?php if (array_key_exists('confirmPassword', $aErrors)) : ?>
                 <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                    <?php echo e($errors['confirmPassword'][0]); ?>
+                    <?php echo e($aErrors['confirmPassword'][0]); ?>
                 </div>
             <?php endif; ?>
         </label>
@@ -52,7 +52,7 @@
                 <div>
                     <label class="inline-flex items-center">
                         <input
-                            <?php echo isset($oldFormData['isAdmin']) && $oldFormData['isAdmin'] === '1'
+                            <?php echo isset($aOldFormData['isAdmin']) && $aOldFormData['isAdmin'] === '1'
                                 ? 'checked'
                                 : ''; ?>
                                 name="isAdmin"
@@ -66,7 +66,7 @@
                 <div class="mt-2">
                     <label class="inline-flex items-center">
                         <input
-                            <?php echo isset($oldFormData['isAdmin']) && $oldFormData['isAdmin'] === '2'
+                            <?php echo isset($aOldFormData['isAdmin']) && $aOldFormData['isAdmin'] === '2'
                                 ? 'checked'
                                 : ''; ?>
                                 name="isAdmin"
@@ -76,9 +76,9 @@
                         />
                         <span class="ml-2">Comum</span>
                     </label>
-                    <?php if (!isset($oldFormData['isAdmin']) && array_key_exists('isAdmin', $errors)) : ?>
+                    <?php if (!isset($aOldFormData['isAdmin']) && array_key_exists('isAdmin', $aErrors)) : ?>
                         <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                            <?php echo e($errors['isAdmin'][0]); ?>
+                            <?php echo e($aErrors['isAdmin'][0]); ?>
                         </div>
                     <?php endif; ?>
                 </div>

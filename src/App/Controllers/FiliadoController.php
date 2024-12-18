@@ -36,7 +36,7 @@ class FiliadoController
             redirectTo('/');
         }
         echo $this->oView->render("filiado/edit.php", [
-            'filiado' => $aFiliado
+            'aFiliado' => $aFiliado
         ]);
     }
     public function edit(array $aParams) {

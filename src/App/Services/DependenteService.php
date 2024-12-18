@@ -9,14 +9,15 @@ use Framework\Database;
 
 class DependenteService
 {
-    public function __construct(private Database $db)
+    public function __construct(private Database $oDb)
     {
     }
 
-    public function create(array $formData)
+    public function create(array $aFormData)
     {
-        $dependente = Dependente::fromArray($formData);
-        $this->db->query(
+        $aFormData['flo_id'] = (int) $aFormData['flo_id'];
+        $aDependente = Dependente::fromArray($aFormData);
+        $this->oDb->query(
             "INSERT INTO `dpe_dependente` (
                               `flo_id`, 
                               `dpe_name`, 
@@ -27,65 +28,65 @@ class DependenteService
                     :dpe_birthDate, 
                     :dpe_relationship)",
             [
-                'id' => $dependente->getId(),
-                'nome' => $dependente->getNome(),
-                'birthDate' => $dependente->getBirthDate(),
-                'relationship' => $dependente->getRelationship()
+                'flo_id' => $aDependente->getFiliadoId(),
+                'dpe_name' => $aDependente->getNome(),
+                'dpe_birthDate' => $aDependente->getBirthDate(),
+                'dpe_relationship' => $aDependente->getRelationship()
             ]
         );
     }
-    public function getAllDependentes(array $filiado) {
-        $dependentesData = $this->db->query(
+    public function getAllDependentes(array $aFiliado) {
+        $aDependentesData = $this->oDb->query(
             "SELECT *, DATE_FORMAT(dpe_birthDate, '%d/%m/%Y') AS formatted_birthDate
             FROM `dpe_dependente`
             WHERE flo_id = :id",
             [
-                'id' => $filiado['flo_id']
+                'id' => $aFiliado['flo_id']
             ])->findAll();
-        $dependentes = [];
-        foreach ($dependentesData as $dependenteData) {
-            $dependente = new Dependente(
-                id: $dependenteData['dpe_id'],
-                filiadoId: $dependenteData['flo_id'],
-                nome: $dependenteData['dpe_name'],
-                birthDate: $dependenteData['formatted_birthDate'],
-                relationship: $dependenteData['dpe_relationship']
+        $aDependentes = [];
+        foreach ($aDependentesData as $aDependenteData) {
+            $oDependente = new Dependente(
+                iId: $aDependenteData['dpe_id'],
+                iFiliadoId: $aDependenteData['flo_id'],
+                sNome: $aDependenteData['dpe_name'],
+                sBirthDate: $aDependenteData['formatted_birthDate'],
+                sRelationship: $aDependenteData['dpe_relationship']
             );
-            $dependenteArray = $dependente->toArray();
-            $dependentes[] = $dependenteArray;
+            $aDependenteArray = $oDependente->toArray();
+            $aDependentes[] = $aDependenteArray;
         }
 
-        return $dependentes;
+        return $aDependentes;
     }
-    public function getDependente(string $id) {
-        return $this->db->query(
+    public function getDependente(string $sId) {
+        return $this->oDb->query(
             "SELECT *, DATE_FORMAT(dpe_birthDate, '%d/%m/%Y') AS formatted_birthDate
             FROM `dpe_dependente`
             WHERE dpe_id = :id",
             [
-                'id' => $id
+                'id' => $sId
             ]
         )->find();
     }
 
-    public function update(array $formData, string $id) {
-        $this->db->query(
+    public function update(array $aFormData, string $sId) {
+        $this->oDb->query(
             "UPDATE `dpe_dependente` 
             SET `dpe_name` = :dpe_name
             WHERE dpe_id = :id",
             [
-                'dpe_name' => $formData['nome'],
-                'id' => $id
+                'dpe_name' => $aFormData['nome'],
+                'id' => $sId
             ]
         );
     }
 
-    public function delete(int $id) {
-        $this->db->query(
+    public function delete(int $sId) {
+        $this->oDb->query(
             "DELETE FROM `dpe_dependente`
             WHERE dpe_id = :id",
             [
-                'id' => $id
+                'id' => $sId
             ]
         );
     }

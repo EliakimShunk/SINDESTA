@@ -9,13 +9,13 @@ use App\Models\Filiado;
 
 class FiliadoService
 {
-    public function __construct(private Database $db) {
+    public function __construct(private Database $oDb) {
     }
 
-    public function create(array $formData) {
-        $filiado = Filiado::fromArray($formData);
+    public function create(array $aFormData) {
+        $oFiliado = Filiado::fromArray($aFormData);
 
-        $this->db->query(
+        $this->oDb->query(
             "INSERT INTO `flo_filiado` (
                            `flo_name`, 
                            `flo_cpf`, 
@@ -37,93 +37,91 @@ class FiliadoService
                     :phone,
                     :cellphone) ",
             [
-                'nome' => $filiado->getNome(),
-                'cpf' => $filiado->getCpf(),
-                'rg' => $filiado->getRg(),
-                'birthDate' => "{$filiado->getBirthDate()} 00:00:00",
-                'company' => $filiado->getCompany(),
-                'position' => $filiado->getPosition(),
-                'status' => $filiado->getStatus(),
-                'phone' => $filiado->getPhone(),
-                'cellphone' => $filiado->getCellphone(),
+                'nome' => $oFiliado->getNome(),
+                'cpf' => $oFiliado->getCpf(),
+                'rg' => $oFiliado->getRg(),
+                'birthDate' => "{$oFiliado->getBirthDate()} 00:00:00",
+                'company' => $oFiliado->getCompany(),
+                'position' => $oFiliado->getPosition(),
+                'status' => $oFiliado->getStatus(),
+                'phone' => $oFiliado->getPhone(),
+                'cellphone' => $oFiliado->getCellphone(),
             ]
         );
     }
 
-    public function getAllFiliados(int $length, int $offset) {
-        $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
-        $monthSelect = $_GET['f'] ?? '';
-        $filterMonth = "= $monthSelect";
-        if ($monthSelect === '') {
-            $filterMonth = '!= 0';
+    public function getAllFiliados(int $iLength, int $iOffset) {
+        $sSearchTerm = addcslashes($_GET['s'] ?? '', '%_');
+        $sMonthSelect = $_GET['f'] ?? '';
+        $sFilterMonth = "= $sMonthSelect";
+        if ($sMonthSelect === '') {
+            $sFilterMonth = '!= 0';
         }
-        $params = [
-            'nome' => "%{$searchTerm}%"
+        $aParams = [
+            'nome' => "%{$sSearchTerm}%"
         ];
 
-        $filiadosData = $this->db->query(
+        $aFiliadosData = $this->oDb->query(
             "SELECT *, DATE_FORMAT(flo_birthDate, '%d/%m/%Y') AS formatted_birthDate,
             DATE_FORMAT(flo_lastUpdate, '%d/%m/%Y as %H:%m:%s') AS formatted_lastUpdate
             FROM `flo_filiado`
             WHERE flo_name LIKE :nome
-            AND MONTH(flo_birthDate) {$filterMonth}
-            LIMIT {$length} OFFSET {$offset}",
-        $params
+            AND MONTH(flo_birthDate) {$sFilterMonth}
+            LIMIT {$iLength} OFFSET {$iOffset}",
+        $aParams
         )->findAll();
 
-        $filiadoCount = $this->db->query(
+        $iFiliadoCount = $this->oDb->query(
             "SELECT COUNT(*) FROM `flo_filiado`
             WHERE flo_name LIKE :nome
-            AND MONTH(flo_birthDate) {$filterMonth}",
-            $params
+            AND MONTH(flo_birthDate) {$sFilterMonth}",
+            $aParams
         )->count();
 
-        $tz = new \DateTimeZone('America/Bahia');
+        $oTz = new \DateTimeZone('America/Bahia');
 
-        // Converter os dados em objetos Filiado
-        $filiados = [];
-        foreach ($filiadosData as $filiadoData) {
-            $birthDate = \DateTime::createFromFormat('Y-m-d H:i:s', $filiadoData['flo_birthDate'], $tz);
-            $age = $birthDate ? $birthDate->diff(new \DateTime('now', $tz))->y : null;
+        $aFiliados = [];
+        foreach ($aFiliadosData as $aFiliadoData) {
+            $oBirthDate = \DateTime::createFromFormat('Y-m-d H:i:s', $aFiliadoData['flo_birthDate'], $oTz);
+            $iAge = $oBirthDate ? $oBirthDate->diff(new \DateTime('now', $oTz))->y : null;
 
-            $filiado = new Filiado(
-                nome: $filiadoData['flo_name'],
-                cpf: $filiadoData['flo_cpf'],
-                rg: $filiadoData['flo_rg'],
-                birthDate: $filiadoData['formatted_birthDate'],
-                company: $filiadoData['flo_company'],
-                position: $filiadoData['flo_position'],
-                status: $filiadoData['flo_status'],
-                phone: $filiadoData['flo_phone'],
-                cellphone: $filiadoData['flo_cellphone'],
-                id: (int) $filiadoData['flo_id'],
-                lastUpdate: $filiadoData['formatted_lastUpdate'] ?? null
+            $oFiliado = new Filiado(
+                sNome: $aFiliadoData['flo_name'],
+                sCpf: $aFiliadoData['flo_cpf'],
+                sRg: $aFiliadoData['flo_rg'],
+                sBirthDate: $aFiliadoData['formatted_birthDate'],
+                sCompany: $aFiliadoData['flo_company'],
+                sPosition: $aFiliadoData['flo_position'],
+                sStatus: $aFiliadoData['flo_status'],
+                sPhone: $aFiliadoData['flo_phone'],
+                sCellphone: $aFiliadoData['flo_cellphone'],
+                iId: (int) $aFiliadoData['flo_id'],
+                sLastUpdate: $aFiliadoData['formatted_lastUpdate'] ?? null
             );
-            // Adiciona a idade calculada diretamente no objeto Filiado
-            $filiadoArray = $filiado->toArray();
-            $filiadoArray['age'] = $age;
 
-            $filiados[] = $filiadoArray;
+            $aFiliadoArray = $oFiliado->toArray();
+            $aFiliadoArray['age'] = $iAge;
+
+            $aFiliados[] = $aFiliadoArray;
         }
 
-
-        return [$filiados, $filiadoCount];
+        return [$aFiliados, $iFiliadoCount];
     }
-    public function getFiliado(string $id) {
-        return $this->db->query(
+    public function getFiliado(string $sId) {
+        return $this->oDb->query(
             "SELECT *, DATE_FORMAT(flo_birthDate, '%d/%m/%Y') AS formatted_birthDate
             FROM `flo_filiado`
             WHERE flo_id = :id",
             [
-                'id' => $id
+                'id' => $sId
             ])->find();
     }
 
-    public function update(array $formData, int $id) {
-        $currentTime = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
-        $currentTime = $currentTime->format('Y-m-d H:i:s');
+    public function update(array $aFormData, int $iId) {
+        $oCurrentTime = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
+        $oCurrentTime = $oCurrentTime->format('Y-m-d H:i:s');
 
-        $this->db->query(
+        $this->oDb->query(
             "UPDATE flo_filiado
                   SET `flo_company` = :company,
                       `flo_position` = :position,
@@ -131,22 +129,22 @@ class FiliadoService
                       `flo_lastUpdate` = :lastUpdate
                   WHERE flo_id = :id",
             [
-                'company' => $formData['company'],
-                'position' => $formData['position'],
-                'status' => $formData['status'],
-                'lastUpdate' => $currentTime,
-                'id' => $id,
+                'company' => $aFormData['company'],
+                'position' => $aFormData['position'],
+                'status' => $aFormData['status'],
+                'lastUpdate' => $oCurrentTime,
+                'id' => $iId,
             ]
         );
     }
-    public function delete(int $id) {
-        $this->db->query(
+    public function delete(int $iId) {
+        $this->oDb->query(
             "DELETE FROM dpe_dependente 
             WHERE flo_id = :id;
             DELETE FROM flo_filiado 
             WHERE flo_id = :id;",
             [
-                'id' => $id
+                'id' => $iId
             ]
         );
     }

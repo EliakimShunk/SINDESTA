@@ -10,142 +10,144 @@ use App\Models\User;
 
 class UserService
 {
-    public function __construct(private Database $db) {
+    public function __construct(private Database $oDb) {
     }
-    public function isUsernameTaken(string $username) {
-        $usernameCount = $this->db->query(
+    public function isUsernameTaken(string $sUsername) {
+        $iUsernameCount = $this->oDb->query(
             "SELECT COUNT(*) FROM usr_usuario WHERE usr_username = :usuario",
             [
-                'usuario' => $username
+                'usuario' => $sUsername
             ]
         )->count();
 
-        if ($usernameCount > 0) {
+        if ($iUsernameCount > 0) {
             throw new ValidationException(['username' => 'Este nome de usuario ja esta sendo utilizado.']);
 
         }
     }
-    public function create(array $formData) {
-        $user = User::fromArray($formData);
+    public function create(array $aFormData) {
+        $aFormData['isAdmin'] = (int) $aFormData['isAdmin'];
+        $oUser = User::fromArray($aFormData);
 
-        $password = password_hash($formData['password'], PASSWORD_BCRYPT, ['cost' => 12]);
+        $sPassword = password_hash($aFormData['password'], PASSWORD_BCRYPT, ['cost' => 12]);
 
-        $this->db->query(
+        $this->oDb->query(
             "INSERT INTO usr_usuario (usr_username, usr_password, usr_is_admin)
                    VALUES (:usuario, :password, :isAdmin)",
             [
-                'usuario' => $user->getUsername(),
-                'password' => $password,
-                'isAdmin' => $user->getIsAdmin()
+                'usuario' => $oUser->getUsername(),
+                'password' => $sPassword,
+                'isAdmin' => $oUser->getIsAdmin()
             ]
         );
     }
 
-    public function getAllUsers(int $length, int $offset)
+    public function getAllUsers(int $iLength, int $iOffset)
     {
-        $searchTerm = addcslashes($_GET['s'] ?? '', '%_');
-        $params = [
-            'usuario' => "%{$searchTerm}%"
+        $sSearchTerm = addcslashes($_GET['s'] ?? '', '%_');
+        $aParams = [
+            'usuario' => "%{$sSearchTerm}%"
         ];
 
-        $usuariosData = $this->db->query(
+        $aUsuariosData = $this->oDb->query(
             "SELECT *, DATE_FORMAT(usr_lastUpdate, '%d/%m/%Y as %H:%i:%s') AS formatted_lastUpdate
             FROM `usr_usuario`
             WHERE usr_username LIKE :usuario
-            LIMIT {$length} OFFSET {$offset}",
-            $params
+            LIMIT {$iLength} OFFSET {$iOffset}",
+            $aParams
         )->findAll();
 
-        $usuarioCount = $this->db->query(
+        $iUsuarioCount = $this->oDb->query(
             "SELECT COUNT(*) FROM `usr_usuario`
             WHERE usr_username LIKE :usuario",
-            $params
+            $aParams
         )->count();
 
-        $usuarios = [];
-        foreach ($usuariosData as $usuarioData) {
-            $usuario = new User(
-                id: $usuarioData['usr_id'],
-                username: $usuarioData['usr_username'],
-                lastUpdate: $usuarioData['formatted_lastUpdate'],
-                isAdmin: $usuarioData['usr_is_admin']
+        $aUsuarios = [];
+        foreach ($aUsuariosData as $aUsuarioData) {
+            $oUsuario = new User(
+                iId: $aUsuarioData['usr_id'],
+                sUsername: $aUsuarioData['usr_username'],
+                sLastUpdate: $aUsuarioData['formatted_lastUpdate'],
+                iIsAdmin: $aUsuarioData['usr_is_admin']
             );
 
-            $usuarioArray = $usuario->toArray();
+            $aUsuarioArray = $oUsuario->toArray();
 
-            $usuarios[] = $usuarioArray;
+            $aUsuarios[] = $aUsuarioArray;
         }
 
-        return [$usuarios, $usuarioCount];
+        return [$aUsuarios, $iUsuarioCount];
 
     }
-    public function getUser(string $id) {
-        return $this->db->query(
+    public function getUser(string $sId) {
+        return $this->oDb->query(
             "SELECT *
             FROM `usr_usuario`
             WHERE usr_id = :id",
             [
-                'id' => $id
+                'id' => $sId
             ])->find();
     }
 
-    public function update(array $formData, int $id) {
-        $currentTime = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
-        $currentTime = $currentTime->format('Y-m-d H:i:s');
+    public function update(array $aFormData, int $iId) {
+        $oCurrentTime = new \DateTimeImmutable('now', new \DateTimeZone('America/Bahia'));
+        $oCurrentTime = $oCurrentTime->format('Y-m-d H:i:s');
 
-        $this->db->query(
+        $this->oDb->query(
             "UPDATE usr_usuario
                   SET `usr_username` = :usuario,
                       `usr_lastUpdate` = :lastUpdate
                   WHERE usr_id = :id",
             [
-                'usuario' => $formData['usuario'],
-                'lastUpdate' => $currentTime,
-                'id' => $id
+                'usuario' => $aFormData['usuario'],
+                'lastUpdate' => $oCurrentTime,
+                'id' => $iId
             ]
         );
 
     }
     
-    public function login(array $formData)
+    public function login(array $aFormData)
     {
-        $user = $this->db->query("SELECT * FROM usr_usuario WHERE usr_username = :usuario", [
-            'usuario' => $formData['usuario']
+        $aUser = $this->oDb->query("SELECT * FROM usr_usuario WHERE usr_username = :usuario", [
+            'usuario' => $aFormData['usuario']
         ])->find();
 
-        $passwordsMatch = password_verify(
-            $formData['password'], $user['usr_password'] ?? ''
+        $bPasswordsMatch = password_verify(
+            $aFormData['password'], $aUser['usr_password'] ?? ''
         );
-        if (!$user || !$passwordsMatch) {
+        if (!$aUser || !$bPasswordsMatch) {
             throw new ValidationException(['password' => ['Credenciais invalidas.']]);
         }
 
         session_regenerate_id();
 
-        $_SESSION['user'] = $user['usr_is_admin'];
+        $_SESSION['user'] = $aUser['usr_is_admin'];
+
     }
 
     public function logout() {
         session_destroy();
 
-        $params = session_get_cookie_params();
+        $aParams = session_get_cookie_params();
         setcookie(
             'PHPSESSID',
             '',
             time() - 3600,
-            $params["path"],
-            $params["domain"],
-            $params["secure"],
-            $params["httponly"]
+            $aParams["path"],
+            $aParams["domain"],
+            $aParams["secure"],
+            $aParams["httponly"]
         );
     }
 
-    public function delete(int $id) {
-        $this->db->query(
+    public function delete(int $iId) {
+        $this->oDb->query(
             "DELETE FROM usr_usuario 
                    WHERE usr_id = :id",
             [
-                'id' => $id
+                'id' => $iId
             ]
         );
     }

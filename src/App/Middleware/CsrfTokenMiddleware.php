@@ -9,16 +9,16 @@ use Framework\TemplateEngine;
 
 class CsrfTokenMiddleware implements MiddlewareInterface
 {
-    public function __construct(private TemplateEngine $view)
+    public function __construct(private TemplateEngine $oView)
     {
     }
 
-    public function process(callable $next)
+    public function process(callable $loNext)
     {
         $_SESSION['token'] = $_SESSION['token'] ?? bin2hex(random_bytes(32));
 
-        $this->view->addGlobal('csrfToken', $_SESSION['token']);
+        $this->oView->addGlobal('sCsrfToken', $_SESSION['token']);
 
-        $next();
+        $loNext();
     }
 }

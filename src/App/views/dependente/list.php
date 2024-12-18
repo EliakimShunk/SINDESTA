@@ -2,9 +2,9 @@
     <!-- Start Main Content Area -->
     <section class="container mx-auto mt-12 p-4 bg-white shadow-md border border-gray-200 rounded">
         <div class="flex items-center justify-between border-b border-gray-200 pb-4">
-            <h4 class="font-medium">Lista de Dependentes (<?php echo e($filiado['flo_name']) ?>)</h4>
+            <h4 class="font-medium">Lista de Dependentes (<?php echo e($aFiliado['flo_name']) ?>)</h4>
             <div class="flex space-x-4">
-                <a href="/filiado/<?php echo e($filiado['flo_id']); ?>/dependente" class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
+                <a href="/filiado/<?php echo e($aFiliado['flo_id']); ?>/dependente" class="flex items-center p-2 bg-sky-50 text-xs text-sky-900 hover:bg-sky-500 hover:text-white transition rounded">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -31,17 +31,17 @@
             </thead>
             <!-- Table Body -->
             <tbody class="divide-y divide-gray-200 bg-white">
-            <?php foreach ($dependentes as $dependente) : ?>
+            <?php foreach ($aDependentes as $aDependente) : ?>
                 <tr>
                     <!-- Nome -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['nome'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($aDependente['nome'])?></td>
                     <!-- Data de Nascimento -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['birth_date'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($aDependente['birthDate'])?></td>
                     <!-- Relacionamento -->
-                    <td class="p-4 text-sm text-gray-600"><?php echo e($dependente['relationship'])?></td>
+                    <td class="p-4 text-sm text-gray-600"><?php echo e($aDependente['relationship'])?></td>
                     <!-- Acoes -->
                     <td class="p-4 text-sm text-gray-600 flex justify-center space-x-2">
-                        <a href="/filiado/<?php echo e($dependente['filiado_id']); ?>/dependente/<?php echo e($dependente['id']); ?>" class="p-2 bg-emerald-50 text-xs
+                        <a href="/filiado/<?php echo e($aDependente['flo_id']); ?>/dependente/<?php echo e($aDependente['id']); ?>" class="p-2 bg-emerald-50 text-xs
                 text-emerald-900 hover:bg-emerald-500 hover:text-white transition rounded">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                  stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -51,7 +51,7 @@
                                0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                             </svg>
                         </a>
-                        <form action="/filiado/<?php echo e($dependente['filiado_id']); ?>/dependente/<?php echo e($dependente['id']); ?>" method="post">
+                        <form action="/filiado/<?php echo e($aDependente['flo_id']); ?>/dependente/<?php echo e($aDependente['id']); ?>" method="post">
                             <input type="hidden" name="_method" value="delete"/>
 
                             <?php include $this->resolve('partials/_csrf.php'); ?>

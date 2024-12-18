@@ -6,57 +6,57 @@ namespace App\Models;
 
 class User
 {
-    private int $id;
-    private string $username;
-    private string $lastUpdate;
-    private int $isAdmin;
+    private ?int $iId = null;
+    private string $sUsername;
+    private ?string $sLastUpdate = null;
+    private int $iIsAdmin;
 
     public function __construct(
-        int $id,
-        string $username,
-        string $lastUpdate,
-        int $isAdmin
+        ?int $iId,
+        string $sUsername,
+        ?string $sLastUpdate,
+        int $iIsAdmin
     ) {
-        $this->id = $id;
-        $this->username = $username;
-        $this->lastUpdate = $lastUpdate;
-        $this->isAdmin = $isAdmin;
+        $this->iId = $iId ?? null;
+        $this->sUsername = $sUsername;
+        $this->sLastUpdate = $sLastUpdate ?? null;
+        $this->iIsAdmin = $iIsAdmin;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
-        return $this->id;
+        return $this->iId;
     }
 
     public function getUsername(): string
     {
-        return $this->username;
+        return $this->sUsername;
     }
 
     public function getLastUpdate(): ?string
     {
-        return $this->lastUpdate;
+        return $this->sLastUpdate;
     }
 
     public function getIsAdmin(): int
     {
-        return $this->isAdmin;
+        return $this->iIsAdmin;
     }
 
     public function toArray(): array {
         return [
-            'id' => $this->id,
-            'username' => $this->username,
-            'lastUpdate' => $this->lastUpdate,
-            'isAdmin' => $this->isAdmin
+            'id' => $this->iId,
+            'username' => $this->sUsername,
+            'lastUpdate' => $this->sLastUpdate,
+            'isAdmin' => $this->iIsAdmin
         ];
     }
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['id'],
-            $data['username'],
-            $data['lastUpdate'],
+            $data['id'] ?? null,
+            $data['usuario'],
+            $data['lastUpdate'] ?? null,
             $data['isAdmin']
         );
     }

@@ -31,20 +31,20 @@ class DependenteController
             redirectTo("/filiado/{$aFiliado['flo_id']}/dependente");
         } else {
             echo $this->oView->render("/dependente/list.php", [
-                'filiado' => $aFiliado,
-                'dependentes' => $aDependentes]);
+                'aFiliado' => $aFiliado,
+                'aDependentes' => $aDependentes]);
         }
 
     }
     public function createView(array $aParams) {
-        $filiado = $this->oFiliadoService->getFiliado(
+        $aFiliado = $this->oFiliadoService->getFiliado(
             $aParams['filiado']
         );
-        if (!$filiado) {
+        if (!$aFiliado) {
             redirectTo('/');
         }
         echo $this->oView->render("dependente/create.php", [
-            'filiado' => $filiado
+            'aFiliado' => $aFiliado
         ]);
     }
     public function create() {
@@ -69,7 +69,7 @@ class DependenteController
             redirectTo('/');
         }
         echo $this->oView->render("dependente/edit.php", [
-            'dependente' => $dependente
+            'aDependente' => $dependente
         ]);
     }
 

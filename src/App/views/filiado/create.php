@@ -6,82 +6,82 @@
 
             <label class="block">
                 <span class="text-gray-700">Nome</span>
-                <input value="<?php echo e($oldFormData['nome'] ?? ''); ?>" name="nome" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('nome', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['nome'] ?? ''); ?>" name="nome" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('nome', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['nome'][0]); ?>
+                        <?php echo e($aErrors['nome'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">CPF</span>
-                <input value="<?php echo e($oldFormData['cpf'] ?? ''); ?>" name="cpf" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('cpf', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['cpf'] ?? ''); ?>" name="cpf" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('cpf', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['cpf'][0]); ?>
+                        <?php echo e($aErrors['cpf'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">RG</span>
-                <input value="<?php echo e($oldFormData['rg'] ?? ''); ?>" name="rg" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('rg', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['rg'] ?? ''); ?>" name="rg" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('rg', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['rg'][0]); ?>
+                        <?php echo e($aErrors['rg'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">Data de Nascimento</span>
-                <input value="<?php echo e($oldFormData['birthDate'] ?? ''); ?>" name="birthDate" type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('birthDate', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['birthDate'] ?? ''); ?>" name="birthDate" type="date" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('birthDate', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['birthDate'][0]); ?>
+                        <?php echo e($aErrors['birthDate'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">Empresa</span>
-                <input value="<?php echo e($oldFormData['company'] ?? ''); ?>" name="company" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('company', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['company'] ?? ''); ?>" name="company" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('company', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['company'][0]); ?>
+                        <?php echo e($aErrors['company'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">Posicao</span>
-                <input value="<?php echo e($oldFormData['position'] ?? ''); ?>" name="position" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('position', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['position'] ?? ''); ?>" name="position" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('position', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['position'][0]); ?>
+                        <?php echo e($aErrors['position'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">Situacao</span>
-                <input value="<?php echo e($oldFormData['status'] ?? ''); ?>" name="status" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('status', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['status'] ?? ''); ?>" name="status" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('status', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['status'][0]); ?>
+                        <?php echo e($aErrors['status'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">Telefone</span>
-                <input value="<?php echo e($oldFormData['phone'] ?? ''); ?>" name="phone" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('phone', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['phone'] ?? ''); ?>" name="phone" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('phone', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['phone'][0]); ?>
+                        <?php echo e($aErrors['phone'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">Celular</span>
-                <input value="<?php echo e($oldFormData['cellphone'] ?? ''); ?>" name="cellphone" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-                <?php if (array_key_exists('cellphone', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['cellphone'] ?? ''); ?>" name="cellphone" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                <?php if (array_key_exists('cellphone', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['cellphone'][0]); ?>
+                        <?php echo e($aErrors['cellphone'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>

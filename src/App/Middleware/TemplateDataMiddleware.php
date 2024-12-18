@@ -9,14 +9,14 @@ use Framework\TemplateEngine;
 
 class TemplateDataMiddleware implements MiddlewareInterface
 {
-    public function __construct(private TemplateEngine $view)
+    public function __construct(private TemplateEngine $oView)
     {
     }
 
-    public function process(callable $next)
+    public function process(callable $loNext)
     {
-        $this->view->addGlobal('title', 'Sindicato dos Estagiarios');
+        $this->oView->addGlobal('sTitle', 'Sindicato dos Estagiarios');
 
-        $next();
+        $loNext();
     }
 }

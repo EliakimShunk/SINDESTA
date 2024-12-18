@@ -6,66 +6,66 @@ namespace App\Models;
 
 class Dependente
 {
-    private int $id;
-    private int $filiadoId;
-    private string $nome;
-    private string $birthDate;
-    private string $relationship;
+    private ?int $iId;
+    private int $iFiliadoId;
+    private string $sNome;
+    private string $sBirthDate;
+    private string $sRelationship;
 
     public function __construct(
-        int $id,
-        int $filiadoId,
-        string $nome,
-        string $birthDate,
-        string $relationship
+        ?int $iId,
+        int $iFiliadoId,
+        string $sNome,
+        string $sBirthDate,
+        string $sRelationship
     ) {
-        $this->id = $id;
-        $this->filiadoId = $filiadoId;
-        $this->nome = $nome;
-        $this->birthDate = $birthDate;
-        $this->relationship = $relationship;
+        $this->iId = $iId ?? null;
+        $this->iFiliadoId = $iFiliadoId;
+        $this->sNome = $sNome;
+        $this->sBirthDate = $sBirthDate;
+        $this->sRelationship = $sRelationship;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
-        return $this->id;
+        return $this->iId;
     }
 
     public function getFiliadoId(): int
     {
-        return $this->filiadoId;
+        return $this->iFiliadoId;
     }
 
     public function getNome(): string
     {
-        return $this->nome;
+        return $this->sNome;
     }
 
     public function getBirthDate(): string
     {
-        return $this->birthDate;
+        return $this->sBirthDate;
     }
 
     public function getRelationship(): string
     {
-        return $this->relationship;
+        return $this->sRelationship;
     }
     public function toArray(): array {
         return [
-            'id' => $this->id,
-            'filiado_id' => $this->filiadoId,
-            'nome' => $this->nome,
-            'birth_date' => $this->birthDate,
-            'relationship' => $this->relationship
+            'id' => $this->iId,
+            'flo_id' => $this->iFiliadoId,
+            'nome' => $this->sNome,
+            'birthDate' => $this->sBirthDate,
+            'relationship' => $this->sRelationship
         ];
     }
-    public static function fromArray(array $data): self {
+    public static function fromArray(array $aData): self {
         return new self(
-            $data['id'],
-            $data['filiado_id'],
-            $data['nome'],
-            $data['birth_date'],
-            $data['relationship']
+            $aData['id'] ?? null,
+            $aData['flo_id'],
+            $aData['nome'],
+            $aData['birthDate'],
+            $aData['relationship']
         );
     }
 }

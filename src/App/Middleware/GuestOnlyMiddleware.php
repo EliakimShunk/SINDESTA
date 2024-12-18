@@ -8,12 +8,12 @@ use Framework\Contracts\MiddlewareInterface;
 
 class GuestOnlyMiddleware implements MiddlewareInterface
 {
-    public function process(callable $next)
+    public function process(callable $loNext)
     {
         if (!empty($_SESSION['user'])) {
             redirectTo('/');
         }
 
-        $next();
+        $loNext();
     }
 }
