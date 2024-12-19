@@ -56,30 +56,30 @@ class DependenteController
     }
 
     public function editView(array $aParams) {
-        $filiado = $this->oFiliadoService->getFiliado(
+        $aFiliado = $this->oFiliadoService->getFiliado(
             $aParams['filiado']
         );
-        if (!$filiado) {
+        if (!$aFiliado) {
             redirectTo('/');
         }
-        $dependente = $this->oDependenteService->getDependente(
+        $aDependente = $this->oDependenteService->getDependente(
             $aParams['dependente']
         );
-        if (!$dependente) {
+        if (!$aDependente) {
             redirectTo('/');
         }
         echo $this->oView->render("dependente/edit.php", [
-            'aDependente' => $dependente
+            'aDependente' => $aDependente
         ]);
     }
 
     public function edit(array $aParams) {
-        $dependente = $this->oDependenteService->getDependente(
+        $aDependente = $this->oDependenteService->getDependente(
             $aParams['dependente']
         );
         $this->oValidatorService->validateDependenteEdit($_POST);
 
-        $this->oDependenteService->update($_POST, $dependente['dpe_id']);
+        $this->oDependenteService->update($_POST, $aDependente['dpe_id']);
 
         redirectTo($_SERVER['HTTP_REFERER']);
     }

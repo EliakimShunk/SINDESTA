@@ -8,12 +8,12 @@
             <!-- ID -->
             <label class="block">
                 <span class="text-gray-700">ID</span>
-                <p><?php echo e($usuario['usr_id'] ?? ''); ?></p>
+                <p><?php echo e($aUsuario['usr_id'] ?? ''); ?></p>
             </label>
             <!-- Usuario -->
             <label class="block">
                 <span class="text-gray-700">Usuario</span>
-                <input value="<?php echo e($usuario['usr_username'] ?? ''); ?>" name ="usuario"
+                <input value="<?php echo e($aUsuario['usr_username'] ?? ''); ?>" name ="usuario"
                        type="text"
                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                        placeholder="Insira o nome do usuario"

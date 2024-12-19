@@ -8,16 +8,16 @@ use Framework\Contracts\RuleInterface;
 
 class MatchRule implements RuleInterface
 {
-    public function validate(array $data, string $field, array $params): bool
+    public function validate(array $aData, string $sField, array $aParams): bool
     {
-        $fieldOne = $data[$field];
-        $fieldTwo = $data[$params[0]];
+        $sFieldOne = $aData[$sField];
+        $sFieldTwo = $aData[$aParams[0]];
 
-        return $fieldOne === $fieldTwo;
+        return $sFieldOne === $sFieldTwo;
     }
 
-    public function getMessage(array $data, string $field, array $params): string
+    public function getMessage(array $aData, string $sField, array $aParams): string
     {
-        return "Nao corresponde ao campo {$params[0]}.";
+        return "Nao corresponde ao campo {$aParams[0]}.";
     }
 }

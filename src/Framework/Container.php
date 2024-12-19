@@ -9,71 +9,74 @@ use Framework\Exceptions\ContainerException;
 
 class Container
 {
-    private array $definitions = [];
-    private array $resolved = [];
+    private array $aDefinitions = [];
+    private array $aResolved = [];
 
-    public function addDefinitions(array $newDefinitions) {
-        $this->definitions = [...$this->definitions, ...$newDefinitions];
+    public function addDefinitions(array $aNewDefinitions) {
+        $this->aDefinitions = [...$this->aDefinitions, ...$aNewDefinitions];
     }
 
-    public function resolve(string $className)
+    public function resolve(string $sClassName)
     {
-        $reflectionClass = new ReflectionClass($className);
+        $oReflectionClass = new ReflectionClass($sClassName);
 
-        if (!$reflectionClass->isInstantiable()) {
-            throw new ContainerException("A classe \"{$className}\" nao pode ser instanciada.");
+        if (!$oReflectionClass->isInstantiable()) {
+            throw new ContainerException("A classe \"{$sClassName}\" nao pode ser instanciada.");
         }
 
-        $constructor = $reflectionClass->getConstructor();
+        $oConstructor = $oReflectionClass->getConstructor();
 
-        if (!$constructor) {
-            return new $className;
+
+        if (!$oConstructor) {
+            return new $sClassName;
         }
 
-        $params = $constructor->getParameters();
+        $loParams = $oConstructor->getParameters();
 
-        if (count($params) === 0) {
-            return new $className;
+
+        if (count($loParams) === 0) {
+            return new $sClassName;
         }
 
-        $dependencies = [];
+        $loDependencies = [];
 
-        foreach ($params as $param) {
-            $name = $param->getName();
-            $type = $param->getType();
+        foreach ($loParams as $oParam) {
+            $sName = $oParam->getName();
+            $oType = $oParam->getType();
 
-            if (!$type) {
+            if (!$oType) {
                 throw new ContainerException(
-                    "Nao foi possivel encontrar a classe {$className}, 
-                    porque o parâmetro {$name} não possui uma indicação de tipo.");
+                    "Nao foi possivel encontrar a classe {$sClassName}, 
+                    porque o parâmetro {$sName} não possui uma indicação de tipo.");
             }
 
-            if (!$type instanceof ReflectionNamedType || $type->isBuiltin()) {
+            if (!$oType instanceof ReflectionNamedType || $oType->isBuiltin()) {
                 throw new ContainerException(
-                    "Nao foi possivel encontrar a classe {$className}, 
+                    "Nao foi possivel encontrar a classe {$sClassName}, 
                     porque o nome do parametro eh invalido.");
             }
-            $dependencies[] = $this->get($type->getName());
+            $loDependencies[] = $this->get($oType->getName());
+
         }
-        return $reflectionClass->newInstanceArgs($dependencies);
+        return $oReflectionClass->newInstanceArgs($loDependencies);
     }
 
-    public function get(string $id)
+    public function get(string $sId)
     {
-        if (!array_key_exists($id, $this->definitions)) {
+        if (!array_key_exists($sId, $this->aDefinitions)) {
             throw new ContainerException(
-                "A classe {$id} nao existe no container."
+                "A classe {$sId} nao existe no container."
             );
         }
 
-        if (array_key_exists($id, $this->resolved)) {
-            return $this->resolved[$id];
+        if (array_key_exists($sId, $this->aResolved)) {
+            return $this->aResolved[$sId];
         }
-        $factory = $this->definitions[$id];
-        $dependency = $factory($this);
+        $loFactory = $this->aDefinitions[$sId];
+        $aDependency = $loFactory($this);
 
-        $this->resolved[$id] = $dependency;
+        $this->aResolved[$sId] = $aDependency;
 
-        return $dependency;
+        return $aDependency;
     }
 }

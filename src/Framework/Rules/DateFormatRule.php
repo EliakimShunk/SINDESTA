@@ -6,15 +6,15 @@ use Framework\Contracts\RuleInterface;
 
 class DateFormatRule implements RuleInterface
 {
-    public function validate(array $data, string $field, array $params): bool
+    public function validate(array $aData, string $sField, array $aParams): bool
     {
-        $parsedDate = date_parse_from_format($params[0], $data[$field]);
+        $aParsedDate = date_parse_from_format($aParams[0], $aData[$sField]);
 
-        return $parsedDate['error_count'] === 0 && $parsedDate['warning_count'] === 0;
+        return $aParsedDate['error_count'] === 0 && $aParsedDate['warning_count'] === 0;
 
     }
 
-    public function getMessage(array $data, string $field, array $params): string
+    public function getMessage(array $aData, string $sField, array $aParams): string
     {
         return "Data invalida.";
 

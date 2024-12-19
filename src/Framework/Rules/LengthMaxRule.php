@@ -9,21 +9,21 @@ use InvalidArgumentException;
 
 class LengthMaxRule implements RuleInterface
 {
-    public function validate(array $data, string $field, array $params): bool
+    public function validate(array $aData, string $sField, array $aParams): bool
     {
-        if (empty($params[0])) {
+        if (empty($aParams[0])) {
             throw new InvalidArgumentException('Limite maximo nao especificado.');
         }
 
-        $length = (int) $params[0];
+        $iLength = (int) $aParams[0];
 
-        return strlen($data[$field]) < $length;
+        return strlen($aData[$sField]) < $iLength;
 
     }
 
-    public function getMessage(array $data, string $field, array $params): string
+    public function getMessage(array $aData, string $sField, array $aParams): string
     {
-        return "Excede o limite maximo de {$params[0]} caracteres.";
+        return "Excede o limite maximo de {$aParams[0]} caracteres.";
 
     }
 }

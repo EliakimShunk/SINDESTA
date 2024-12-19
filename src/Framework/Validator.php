@@ -9,38 +9,38 @@ use Framework\Exceptions\ValidationException;
 
 class Validator
 {
-    private array $rules = [];
+    private array $aRules = [];
 
-    public function add(string $alias, RuleInterface $rule)
+    public function add(string $sAlias, RuleInterface $oRule)
     {
-        $this->rules[$alias] = $rule;
+        $this->aRules[$sAlias] = $oRule;
     }
-    public function validate(array $formData, array $fields)
+    public function validate(array $aFormData, array $aFields)
     {
-        $errors = [];
-        foreach ($fields as $fieldName => $rules) {
-            foreach ($rules as $rule) {
-                $ruleParams = [];
+        $aErrors = [];
+        foreach ($aFields as $sFieldName => $aRules) {
+            foreach ($aRules as $sRule) {
+                $aRuleParams = [];
 
-                if (str_contains($rule, ':')) {
-                    [$rule, $ruleParams] = explode(':', $rule);
-                    $ruleParams = explode(',', $ruleParams);
+                if (str_contains($sRule, ':')) {
+                    [$sRule, $aRuleParams] = explode(':', $sRule);
+                    $aRuleParams = explode(',', $aRuleParams);
                 }
 
-                $ruleValidator = $this->rules[$rule];
+                $oRuleValidator = $this->aRules[$sRule];
 
-                if ($ruleValidator->validate($formData, $fieldName, $ruleParams)) {
+                if ($oRuleValidator->validate($aFormData, $sFieldName, $aRuleParams)) {
                     continue;
                 }
 
-                $errors[$fieldName][] = $ruleValidator->getMessage(
-                    $formData,
-                    $fieldName,
-                    $ruleParams);
+                $aErrors[$sFieldName][] = $oRuleValidator->getMessage(
+                    $aFormData,
+                    $sFieldName,
+                    $aRuleParams);
             }
         }
-         if (count($errors)) {
-            throw new ValidationException($errors);
+         if (count($aErrors)) {
+            throw new ValidationException($aErrors);
         }
     }
 }

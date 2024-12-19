@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 use Framework\Http;
 
-function dd(mixed $value) : void {
+function dd(mixed $mValue) : void {
     echo "<pre>";
-    var_dump($value);
+    var_dump($mValue);
     echo "</pre>";
     die();
 }
 
-function e(mixed $value): string {
-    return htmlspecialchars((string) $value);
+function e(mixed $mValue): string {
+    return htmlspecialchars((string) $mValue);
 }
 
-function redirectTo(string $path) {
-    header("location: {$path}");
+function redirectTo(string $sPath) {
+    header("location: {$sPath}");
     http_response_code(Http::REDIRECT_STATUS_CODE);
     exit;
 }

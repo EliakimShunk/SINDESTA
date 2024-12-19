@@ -10,12 +10,12 @@ use Dotenv\Dotenv;
 
 use function App\Config\{registerRoutes, registerMiddleware};
 
-$dotenv = Dotenv::createImmutable(Paths::ROOT);
-$dotenv->load();
+$oDotenv = Dotenv::createImmutable(Paths::ROOT);
+$oDotenv->load();
 
-$app = new App(Paths::SOURCE . "App/container-definitions.php");
+$loApp = new App(Paths::SOURCE . "App/container-definitions.php");
 
-registerRoutes($app);
-registerMiddleware($app);
+registerRoutes($loApp);
+registerMiddleware($loApp);
 
-return $app;
+return $loApp;

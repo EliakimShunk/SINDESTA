@@ -8,58 +8,58 @@ use Framework\Router;
 
 class App
 {
-    private Router $router;
-    private Container $container;
+    private Router $oRouter;
+    private Container $oContainer;
 
-    public function __construct(string $containerDefinitionsPath = null)
+    public function __construct(string $sContainerDefinitionsPath = null)
     {
-        $this->router = new Router();
-        $this->container = new Container();
+        $this->oRouter = new Router();
+        $this->oContainer = new Container();
 
-        if ($containerDefinitionsPath) {
-            $containerDefinitions = include $containerDefinitionsPath;
-            $this->container->addDefinitions($containerDefinitions);
+        if ($sContainerDefinitionsPath) {
+            $loContainerDefinitions = include $sContainerDefinitionsPath;
+            $this->oContainer->addDefinitions($loContainerDefinitions);
         }
     }
 
     public function run()
     {
-        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $method = $_SERVER['REQUEST_METHOD'];
+        $sPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $sMethod = $_SERVER['REQUEST_METHOD'];
 
-        $this->router->dispatch($path, $method, $this->container);
+        $this->oRouter->dispatch($sPath, $sMethod, $this->oContainer);
 
     }
 
-    public function get(string $path, array $controller): App
+    public function get(string $sPath, array $aController): App
     {
-        $this->router->add('get', $path, $controller);
+        $this->oRouter->add('get', $sPath, $aController);
         return $this;
     }
 
-    public function post(string $path, array $controller): App
+    public function post(string $sPath, array $aController): App
     {
-        $this->router->add('post', $path, $controller);
+        $this->oRouter->add('post', $sPath, $aController);
         return $this;
     }
 
-    public function addMiddleware(string $middleware)
+    public function addMiddleware(string $sMiddleware)
     {
-        $this->router->addMiddleware($middleware);
+        $this->oRouter->addMiddleware($sMiddleware);
     }
 
-    public function add(string $middleware) {
-        $this->router->addRouteMiddleware($middleware);
+    public function add(string $sMiddleware) {
+        $this->oRouter->addRouteMiddleware($sMiddleware);
     }
 
-    public function delete(string $path, array $controller): App
+    public function delete(string $sPath, array $aController): App
     {
-        $this->router->add('DELETE', $path, $controller);
+        $this->oRouter->add('DELETE', $sPath, $aController);
 
         return $this;
     }
 
-    public function setErrorHandler(array $controller) {
-        $this->router->setErrorHandler($controller);
+    public function setErrorHandler(array $aController) {
+        $this->oRouter->setErrorHandler($aController);
     }
 }

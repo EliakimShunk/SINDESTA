@@ -7,12 +7,12 @@ use Framework\Contracts\RuleInterface;
 class TelefoneFormatRule implements RuleInterface
 {
 
-    public function validate(array $data, string $field, array $params): bool
+    public function validate(array $aData, string $sField, array $aParams): bool
     {
-        return (bool) preg_match('#^\([0-9]{2}\) [0-9]{4}\-[0-9]{4}$#', $data[$field]);
+        return (bool) preg_match('#^\([0-9]{2}\) [0-9]{4}\-[0-9]{4}$#', $aData[$sField]);
     }
 
-    public function getMessage(array $data, string $field, array $params): string
+    public function getMessage(array $aData, string $sField, array $aParams): string
     {
         return 'Numero de telefone invalido.';
     }

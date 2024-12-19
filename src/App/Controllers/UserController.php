@@ -40,19 +40,19 @@ class UserController
         );
 
         echo $this->oView->render("/usuario/list.php", [
-            'usuarios' => $aUsuarios,
-            'currentPage' => $iPage,
-            'previousPageQuery' => http_build_query([
+            'aUsuarios' => $aUsuarios,
+            'iCurrentPage' => $iPage,
+            'aPreviousPageQuery' => http_build_query([
                 'p' => $iPage - 1,
                 's' => $mSearchTerm
             ]),
-            'lastPage' => $iLastPage,
-            'nextPageQuery' => http_build_query([
+            'iLastPage' => $iLastPage,
+            'aNextPageQuery' => http_build_query([
                 'p' => $iPage + 1,
                 's' => $mSearchTerm
             ]),
-            'pageLinks' => $aPageLinks,
-            'searchTerm' => $mSearchTerm
+            'aPageLinks' => $aPageLinks,
+            'mSearchTerm' => $mSearchTerm
         ]);
     }
 
@@ -65,7 +65,7 @@ class UserController
             redirectTo('/');
         }
         echo $this->oView->render("usuario/edit.php", [
-            'usuario' => $aUsuario
+            'aUsuario' => $aUsuario
         ]);
     }
     public function edit(array $aParams) {

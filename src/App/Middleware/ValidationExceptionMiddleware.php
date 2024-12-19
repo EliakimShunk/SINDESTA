@@ -13,7 +13,7 @@ class ValidationExceptionMiddleware implements MiddlewareInterface
     {
         try {
             $loNext();
-        } catch (ValidationException $e) {
+        } catch (ValidationException $oE) {
             $aOldFormData = $_POST;
 
             $aExcludedFields = ['password', 'confirmPassword'];
@@ -22,7 +22,7 @@ class ValidationExceptionMiddleware implements MiddlewareInterface
                 array_flip($aExcludedFields)
             );
 
-            $_SESSION['aErrors'] = $e->errors;
+            $_SESSION['aErrors'] = $oE->aErrors;
             $_SESSION['aOldFormData'] = $aFormatedFormData;
 
             $sReferer = $_SERVER['HTTP_REFERER'];

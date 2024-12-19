@@ -9,12 +9,12 @@ use Framework\Contracts\RuleInterface;
 class InRule implements RuleInterface
 {
 
-    public function validate(array $data, string $field, array $params): bool
+    public function validate(array $aData, string $sField, array $aParams): bool
     {
-        return in_array($data[$field], $params);
+        return in_array($aData[$sField], $aParams);
     }
 
-    public function getMessage(array $data, string $field, array $params): string
+    public function getMessage(array $aData, string $sField, array $aParams): string
     {
         return "Opcao invalida selecionada.";
     }

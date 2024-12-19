@@ -5,19 +5,19 @@
             <?php include $this->resolve('partials/_csrf.php'); ?>
             <label class="block">
                 <span class="text-gray-700">Usuario</span>
-                <input value="<?php echo e($oldFormData['usuario'] ?? '') ?>" name="usuario" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Insira seu nome de usuario" />
-                <?php if (array_key_exists('usuario', $errors)) : ?>
+                <input value="<?php echo e($aOldFormData['usuario'] ?? '') ?>" name="usuario" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Insira seu nome de usuario" />
+                <?php if (array_key_exists('usuario', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['usuario'][0]); ?>
+                        <?php echo e($aErrors['usuario'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>
             <label class="block">
                 <span class="text-gray-700">Senha</span>
                 <input name="password" type="password" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Insira sua senha" />
-                <?php if (array_key_exists('password', $errors)) : ?>
+                <?php if (array_key_exists('password', $aErrors)) : ?>
                     <div class="bg-gray-100 mt-2 p-2 text-red-500">
-                        <?php echo e($errors['password'][0]); ?>
+                        <?php echo e($aErrors['password'][0]); ?>
                     </div>
                 <?php endif; ?>
             </label>

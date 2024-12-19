@@ -8,45 +8,45 @@ use PDO, PDOException, PDOStatement;
 
 class Database
 {
-    private PDO $connection;
-    private PDOStatement $stmt;
-    public function __construct(string $driver, array $config, string $username, string $password)
+    private PDO $oConnection;
+    private PDOStatement $oStmt;
+    public function __construct(string $sDriver, array $aConfig, string $sUsername, string $sPassword)
     {
-        $config = http_build_query(data:$config, arg_separator: ';');
+        $aConfig = http_build_query(data:$aConfig, arg_separator: ';');
 
-        $dsn = "$driver:$config";
+        $sDsn = "$sDriver:$aConfig";
 
         try {
-            $this->connection = new PDO($dsn, $username, $password, [
+            $this->oConnection = new PDO($sDsn, $sUsername, $sPassword, [
                 PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
             ]);
-        } catch (PDOException $e) {
+        } catch (PDOException $oE) {
             die("Nao foi possivel se conectar ao banco de dados.");
         }
 
     }
 
-    public function query(string $query, array $params = []): Database
+    public function query(string $sQuery, array $aParams = []): Database
     {
-        $this->stmt = $this->connection->prepare($query);
+        $this->oStmt = $this->oConnection->prepare($sQuery);
 
-        $this->stmt->execute($params);
+        $this->oStmt->execute($aParams);
 
         return $this;
     }
 
     public function count() {
-        return $this->stmt->fetchColumn();
+        return $this->oStmt->fetchColumn();
     }
 
     public function find()
     {
-        return $this->stmt->fetch();
+        return $this->oStmt->fetch();
     }
 
     public function findAll()
     {
-        return $this->stmt->fetchAll();
+        return $this->oStmt->fetchAll();
         
     }
 }

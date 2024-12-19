@@ -45,22 +45,22 @@ class HomeController
 
 
         echo $this->oView->render("/index.php", [
-            'filiados' => $aFiliados,
-            'currentPage' => $iPage,
-            'previousPageQuery' => http_build_query([
+            'aFiliados' => $aFiliados,
+            'iCurrentPage' => $iPage,
+            'aPreviousPageQuery' => http_build_query([
                 'p' => $iPage - 1,
                 's' => $mSearchTerm,
                 'f' => $mFilterMonth
             ]),
-            'lastPage' => $iLastPage,
-            'nextPageQuery' => http_build_query([
+            'iLastPage' => $iLastPage,
+            'aNextPageQuery' => http_build_query([
                 'p' => $iPage + 1,
                 's' => $mSearchTerm,
                 'f' => $mFilterMonth
             ]),
-            'pageLinks' => $aPageLinks,
-            'searchTerm' => $mSearchTerm,
-            'filterMonth' => $mFilterMonth
+            'aPageLinks' => $aPageLinks,
+            'mSearchTerm' => $mSearchTerm,
+            'mFilterMonth' => $mFilterMonth
         ]);
     }
 }

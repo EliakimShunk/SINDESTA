@@ -6,109 +6,110 @@ namespace Framework;
 
 class Router
 {
-    private array $routes = [];
-    private array $middlewares = [];
-    private array $errorHandler;
+    private array $aRoutes = [];
+    private array $aMiddlewares = [];
+    private array $aErrorHandler;
 
-    public function add(string $method, string $path, array $controller)
+    public function add(string $sMethod, string $sPath, array $aController)
     {
-        $path = $this->normalizePath($path);
+        $sPath = $this->normalizePath($sPath);
 
-        $regexPath = preg_replace('#{[^/]+}#', '([^/]+)', $path);
+        $sRegexPath = preg_replace('#{[^/]+}#', '([^/]+)', $sPath);
 
-        $this->routes[] = [
-            'path' => $path,
-            'method' => strtoupper($method),
-            'controller' => $controller,
+        $this->aRoutes[] = [
+            'path' => $sPath,
+            'method' => strtoupper($sMethod),
+            'controller' => $aController,
             'middlewares' => [],
-            'regexPath' => $regexPath
+            'regexPath' => $sRegexPath
         ];
 
     }
 
-    private function normalizePath(string $path): string
+    private function normalizePath(string $sPath): string
     {
-        $path = trim($path, '/');
-        $path = "/{$path}/";
-        $path = preg_replace('#[/]{2,}#', '/', $path);
-        return $path;
+        $sPath = trim($sPath, '/');
+        $sPath = "/{$sPath}/";
+        $sPath = preg_replace('#[/]{2,}#', '/', $sPath);
+        return $sPath;
     }
 
-    public function dispatch(string $path, string $method, Container $container = null)
+    public function dispatch(string $sPath, string $sMethod, Container $oContainer = null)
     {
-        $path = $this->normalizePath($path);
-        $method = strtoupper($_POST['_method'] ?? $method);
+        $sPath = $this->normalizePath($sPath);
+        $sMethod = strtoupper($_POST['_method'] ?? $sMethod);
 
-        foreach ($this->routes as $route) {
+        foreach ($this->aRoutes as $aRoute) {
             if (
-                !preg_match("#^{$route['regexPath']}$#", $path, $paramValues)
-                || $route['method'] !== $method
+                !preg_match("#^{$aRoute['regexPath']}$#", $sPath, $aParamValues)
+                || $aRoute['method'] !== $sMethod
             ) {
                 continue;
             }
 
-            array_shift($paramValues);
+            array_shift($aParamValues);
 
-            preg_match_all('#{([^/]+)}#', $route['path'], $paramKeys);
+            preg_match_all('#{([^/]+)}#', $aRoute['path'], $aParamKeys);
 
-            $paramKeys = $paramKeys[1];
+            $aParamKeys = $aParamKeys[1];
 
-            $params = array_combine($paramKeys, $paramValues);
+            $aParams = array_combine($aParamKeys, $aParamValues);
 
 
-            [$class, $function] = $route['controller'];
+            [$sClass, $sFunction] = $aRoute['controller'];
 
-            $controllerInstance = $container
-                ? $container->resolve($class)
-                : new $class;
+            $mControllerInstance = $oContainer
+                ? $oContainer->resolve($sClass)
+                : new $sClass;
 
-            $action = fn() => $controllerInstance->{$function}($params);
+            $fnAction = fn() => $mControllerInstance->{$sFunction}($aParams);
 
-            $allMiddleware = [...$route['middlewares'], ...$this->middlewares];
 
-            foreach ($allMiddleware as $middleware) {
-                $middlewareInstance = $container
-                    ? $container->resolve($middleware)
-                    : new $middleware;
-                $action = fn() => $middlewareInstance->process($action);
+            $aAllMiddleware = [...$aRoute['middlewares'], ...$this->aMiddlewares];
+
+            foreach ($aAllMiddleware as $sMiddleware) {
+                $mMiddlewareInstance = $oContainer
+                    ? $oContainer->resolve($sMiddleware)
+                    : new $sMiddleware;
+                $fnAction = fn() => $mMiddlewareInstance->process($fnAction);
             }
 
-            $action();
+            $fnAction();
 
             return;
         }
-        $this->dispatchNotFound($container);
+        $this->dispatchNotFound($oContainer);
     }
 
-    public function addMiddleware(string $middleware)
+    public function addMiddleware(string $sMiddleware)
     {
-        $this->middlewares[] = $middleware;
+        $this->aMiddlewares[] = $sMiddleware;
     }
 
-    public function addRouteMiddleware(string $middleware) {
-        $lastRouteKey = array_key_last($this->routes);
-        $this->routes[$lastRouteKey]['middlewares'][] = $middleware;
+    public function addRouteMiddleware(string $sMiddleware) {
+        $mLastRouteKey = array_key_last($this->aRoutes);
+        $this->aRoutes[$mLastRouteKey]['middlewares'][] = $sMiddleware;
     }
 
-    public function setErrorHandler(array $controller) {
-        $this->errorHandler = $controller;
+    public function setErrorHandler(array $aController) {
+        $this->aErrorHandler = $aController;
     }
 
-    public function dispatchNotFound(?Container $container) {
-        [$class, $function] = $this->errorHandler;
+    public function dispatchNotFound(?Container $oContainer) {
+        [$sClass, $sFunction] = $this->aErrorHandler;
 
-        $controllerInstance = $container
-            ? $container->resolve($class)
-            : new $class;
+        $mControllerInstance = $oContainer
+            ? $oContainer->resolve($sClass)
+            : new $sClass;
 
-        $action = fn() => $controllerInstance->{$function}();
+        $fnAction = fn() => $mControllerInstance->{$sFunction}();
 
-        foreach ($this->middlewares as $middleware) {
-            $middlewareInstance = $container
-                ? $container->resolve($middleware)
-                : new $middleware;
-            $action = fn() => $middlewareInstance->process($action);
+        foreach ($this->aMiddlewares as $sMiddleware) {
+            $mMiddlewareInstance = $oContainer
+                ? $oContainer->resolve($sMiddleware)
+                : new $sMiddleware;
+            $fnAction = fn() => $mMiddlewareInstance->process($fnAction);
         }
-        $action();
+        $fnAction();
     }
 }

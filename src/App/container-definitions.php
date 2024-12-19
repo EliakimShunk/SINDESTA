@@ -18,19 +18,19 @@ return [
         'port' => $_ENV['DB_PORT'],
         'dbname' => $_ENV['DB_NAME']
     ], $_ENV['DB_USER'], $_ENV['DB_PASS']),
-    UserService::class => function (Container $container) {
-        $db = $container->get(Database::class);
+    UserService::class => function (Container $oContainer) {
+        $oDb = $oContainer->get(Database::class);
 
-        return new UserService($db);
+        return new UserService($oDb);
     },
-    FiliadoService::class => function (Container $container) {
-        $db = $container->get(Database::class);
+    FiliadoService::class => function (Container $oContainer) {
+        $oDb = $oContainer->get(Database::class);
 
-        return new FiliadoService($db);
+        return new FiliadoService($oDb);
     },
-    DependenteService::class => function (Container $container) {
-        $db = $container->get(Database::class);
+    DependenteService::class => function (Container $oContainer) {
+        $oDb = $oContainer->get(Database::class);
 
-        return new DependenteService($db);
+        return new DependenteService($oDb);
     }
 ];
